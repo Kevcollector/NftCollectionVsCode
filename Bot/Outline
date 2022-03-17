@@ -1,0 +1,19 @@
+we need a whole database first so we run the whole deal
+Start up API:
+  Sales
+  Resales
+  auctions 
+  offers
+  transfers 
+  
+
+once up and running we are just updating the data
+
+Running API:
+  Sales  
+  auctions
+  offers
+  transfers 
+  
+  
+if the new data from the api is not the same as whats in the dataframe we will send a message to the group saying its a sale etc.
