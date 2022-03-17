@@ -29,6 +29,18 @@ class ApiAuthor:
         self.authers_ = json.loads(authers.text)
         return self.authers_
 
+    def refresh(self, updatetime):
+        authers = ("https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=3&account={}&collection_name={}&after={}&page=1&limit=100&order=desc&sort=updated".format(
+            self.auther, self.collection, updatetime))
+        authers = requests.get(authers)
+        waitUntilReset = int(authers.headers['X-RateLimit-Reset'])
+        remainderPings = int(authers.headers['X-RateLimit-Remaining'])
+        if remainderPings < 3:
+            wait = waitUntilReset-time.time()
+            time.sleep(wait)
+        self.authers_ = json.loads(authers.text)
+        return self.authers_
+
 
 class ApiResales:
     def __init__(self, auther, collection_name):
@@ -46,6 +58,18 @@ class ApiResales:
 
     def update(self, updatetime):
         resells = ("https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=1%2C3&seller_blacklist={}&buyer_blacklist={}&collection_name={}&before={}&page=1&limit=100&order=desc&sort=updated".format(
+            self.auther, self.auther, self.collection, updatetime))
+        resells = requests.get(resells)
+        waitUntilReset = int(resells.headers['X-RateLimit-Reset'])
+        remainderPings = int(resells.headers['X-RateLimit-Remaining'])
+        if remainderPings < 3:
+            wait = waitUntilReset-time.time()
+            time.sleep(wait)
+        self.resells_ = json.loads(resells.text)
+        return self.resells_
+
+    def refresh(self, updatetime):
+        resells = ("https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=1%2C3&seller_blacklist={}&buyer_blacklist={}&collection_name={}&after={}&page=1&limit=100&order=desc&sort=updated".format(
             self.auther, self.auther, self.collection, updatetime))
         resells = requests.get(resells)
         waitUntilReset = int(resells.headers['X-RateLimit-Reset'])
@@ -120,7 +144,7 @@ class ApiTransfersAuther:
 class ApiTransfersOther:
     def _init__(self, collection_name):
         self.collection = collection_name
-        TransfersOther = "https://proton.api.atomicassets.io/atomicassets/v1/transfers?collection_name={}&hide_contracts=true&&page=1&limit=100&order=desc&sort=created".format(
+        TransfersOther = "https://proton.api.atomicassets.io/atomicassets/v1/transfers?collection_name={}&hide_contracts=true&page=1&limit=100&order=desc&sort=created".format(
             self.collection)
         TransfersOther = requests.get(TransfersOther)
         waitUntilReset = int(TransfersOther.headers['X-RateLimit-Reset'])
