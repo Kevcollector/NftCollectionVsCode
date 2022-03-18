@@ -14,6 +14,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*.pyc
 *$py.class
 
 
@@ -79,7 +80,11 @@ celerybeat.pid
 
 # Environments
 .env
-.venv
+/.venv
+/.venv/
+\.venv
+
+*.pyc
 env/
 venv/
 ENV/
@@ -109,3 +114,9 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+.venv/Lib/site-packages/__pycache__/autopep8.cpython-310.pyc
+.venv/Lib/site-packages/__pycache__/pycodestyle.cpython-310.pyc
+.venv/Lib/site-packages/toml/__pycache__/__init__.cpython-310.pyc
+.venv/Lib/site-packages/toml/__pycache__/decoder.cpython-310.pyc
+.venv/Lib/site-packages/toml/__pycache__/encoder.cpython-310.pyc
+.venv/Lib/site-packages/toml/__pycache__/tz.cpython-310.pyc

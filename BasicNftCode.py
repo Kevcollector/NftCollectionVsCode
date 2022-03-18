@@ -37,11 +37,11 @@ def collection(author, collection_name, heading, *excelsheetname):
         pathlib.Path(path).mkdir(parents=True, exist_ok=True)
     os.chdir(path)
 
-    authers = ApiAuthor(author, collection_name)
-    sales = SalesClass.Sales(authers.authers_)
-    while len(authers.authers_["data"]) != 0:
-        sales.add(authers.authers_)
-        authers.update(sales.timeMs)
+    authors = ApiAuthor(author, collection_name)
+    sales = SalesClass.Sales(authors.authors_)
+    while len(authors.authors_["data"]) != 0:
+        sales.add(authors.authors_)
+        authors.update(sales.timeMs)
     auctions = (
         "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&seller={}&collection_name={}&page=1&limit=100&order=desc&sort=created".format(author,                                                                                                                                                           collection_name))
     auctions = requests.get(auctions).text
@@ -252,7 +252,7 @@ def collection(author, collection_name, heading, *excelsheetname):
     os.chdir(path.parent.absolute())
 
 
-# collection(auther,collection_name,heading,excelsheetname1)
+# collection(author,collection_name,heading,excelsheetname1)
 
 
 author = 'yfnc'

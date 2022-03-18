@@ -42,7 +42,7 @@ totalResellslist = []
 totalholderslist = []
 
 
-def collection(auther, collection_name, heading, userMonth, userYear, *excelsheetname):
+def collection(author, collection_name, heading, userMonth, userYear, *excelsheetname):
     global Royal
     global total_df
     collecion = "".join(excelsheetname)
@@ -55,7 +55,7 @@ def collection(auther, collection_name, heading, userMonth, userYear, *excelshee
     else:
         pathlib.Path(path).mkdir(parents=True, exist_ok=True)
 
-    authers = " "
+    authors = " "
     all = " "
     holders = " "
     resales = "Resells"
@@ -63,24 +63,24 @@ def collection(auther, collection_name, heading, userMonth, userYear, *excelshee
     Holders = "Holders"
 
     holder_list = []
-    authers_list = []
+    authors_list = []
     all_list = []
     parents_list = []
 
-    def normalServic(authers, all, resales, FirstSale, Holders, holders, *excelsheetname):
+    def normalServic(authors, all, resales, FirstSale, Holders, holders, *excelsheetname):
         global Royal
         global totalBuyslist
         global totalResellslist
         global totalholderslist
         os.chdir(path)
-        authers = ("https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=3&account={}"
-                   "&collection_name={}&page=1&limit=100&order=desc&sort=updated".format(auther, collection_name))
-        authers = requests.get(authers).text
-        authers_ = json.loads(authers)
+        authors = ("https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=3&account={}"
+                   "&collection_name={}&page=1&limit=100&order=desc&sort=updated".format(author, collection_name))
+        authors = requests.get(authors).text
+        authors_ = json.loads(authors)
         print("getting First sales")
-        while len(authers_['data']) != 0:
+        while len(authors_['data']) != 0:
 
-            for data_info in authers_['data']:
+            for data_info in authors_['data']:
                 fixedC = 0
                 fixedX = 0
                 fixedL = 0
@@ -109,30 +109,30 @@ def collection(auther, collection_name, heading, userMonth, userYear, *excelshee
                     timex).strftime('%d-%m-%Y %H:%M:%S')
                 # this is to check if the month is the same as the user entered amount
                 timeChecker = datetime.utcfromtimestamp(timex)
-                authers_list.append(
+                authors_list.append(
                     [seller, fixedC, fixedX, fixedL, buyer, number_of_nft, name, local_time])
                 if userMonth == str(timeChecker.month) and userYear == str(timeChecker.year):
                     totalBuyslist.append(
                         [seller, fixedC, fixedX, fixedL, buyer, number_of_nft, name, local_time])
             time.sleep(0.2)
-            authers = ("https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=3&account={}"
-                       "&collection_name={}&before={}&page=1&limit=100&order=desc&sort=updated".format(auther,
+            authors = ("https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=3&account={}"
+                       "&collection_name={}&before={}&page=1&limit=100&order=desc&sort=updated".format(author,
                                                                                                        collection_name,
                                                                                                        timef))
-            authers = requests.get(authers).text
-            authers_ = json.loads(authers)
+            authors = requests.get(authors).text
+            authors_ = json.loads(authors)
 
         time.sleep(4)
 
-        authersOffers = ("https://proton.api.atomicassets.io/atomicmarket/v1/buyoffers?state=3&seller={}"
-                         "&collection_name={}&page=1&limit=100&order=desc&sort=created".format(auther, collection_name))
-        authersOffers = requests.get(authersOffers).text
-        authersOffers_ = json.loads(authersOffers)
+        authorsOffers = ("https://proton.api.atomicassets.io/atomicmarket/v1/buyoffers?state=3&seller={}"
+                         "&collection_name={}&page=1&limit=100&order=desc&sort=created".format(author, collection_name))
+        authorsOffers = requests.get(authorsOffers).text
+        authorsOffers_ = json.loads(authorsOffers)
 
         print("getting sales offers")
-        while len(authersOffers_['data']) != 0:
+        while len(authorsOffers_['data']) != 0:
 
-            for data_info in authersOffers_['data']:
+            for data_info in authorsOffers_['data']:
                 fixedC = 0
                 fixedX = 0
                 fixedL = 0
@@ -161,22 +161,22 @@ def collection(auther, collection_name, heading, userMonth, userYear, *excelshee
                     timex).strftime('%d-%m-%Y %H:%M:%S')
                 timeChecker = datetime.utcfromtimestamp(
                     timex)  # this is to check if the month is the same as the user entered amount
-                authers_list.append(
+                authors_list.append(
                     [seller, fixedC, fixedX, fixedL, buyer, number_of_nft, name, local_time])
                 if userMonth == str(timeChecker.month) and userYear == str(timeChecker.year):
                     totalBuyslist.append(
                         [seller, fixedC, fixedX, fixedL, buyer, number_of_nft, name, local_time])
             time.sleep(0.2)
-            authersOffers = ("https://proton.api.atomicassets.io/atomicmarket/v1/buyoffers?state=3&seller={}"
-                             "&collection_name={}&before={}&page=1&limit=100&order=desc&sort=created".format(auther,
+            authorsOffers = ("https://proton.api.atomicassets.io/atomicmarket/v1/buyoffers?state=3&seller={}"
+                             "&collection_name={}&before={}&page=1&limit=100&order=desc&sort=created".format(author,
                                                                                                              collection_name,
                                                                                                              timef))
-            authersOffers = requests.get(authersOffers).text
-            authersOffers_ = json.loads(authersOffers)
+            authorsOffers = requests.get(authorsOffers).text
+            authorsOffers_ = json.loads(authorsOffers)
 
         auctions = (
             "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&seller={}&collection_name={}&page=1&limit=100&order=desc&sort=created".format(
-                auther,
+                author,
                 collection_name))
         auctions = requests.get(auctions).text
         auctions_ = json.loads(auctions)
@@ -209,7 +209,7 @@ def collection(auther, collection_name, heading, userMonth, userYear, *excelshee
                 local_time = datetime.utcfromtimestamp(
                     timeSec).strftime('%m-%d-%Y %H:%M:%S')
 
-                authers_list.append(
+                authors_list.append(
                     [seller, fixedC, fixedX, fixedL, buyer, number_of_nft, name, local_time])
                 if userMonth == str(timeChecker.month) and userYear == str(timeChecker.year):
                     totalBuyslist.append(
@@ -217,11 +217,11 @@ def collection(auther, collection_name, heading, userMonth, userYear, *excelshee
 
             auctions = (
                 "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&seller={}&collection_name={}"
-                "&before={}&page=1&limit=100&order=desc&sort=created".format(auther, collection_name, timeMs))
+                "&before={}&page=1&limit=100&order=desc&sort=created".format(author, collection_name, timeMs))
             auctions = requests.get(auctions).text
             auctions_ = json.loads(auctions)
 
-        name_df = pd.DataFrame(data=authers_list,
+        name_df = pd.DataFrame(data=authors_list,
                                columns=["author ", "price listed usd", "price listed xpr", "price listed loan", "buyer", "# of nft", "name", "time"])
         total = name_df['price listed usd'].sum()
         name_df.at['Total', 'price listed usd'] = name_df['price listed usd'].sum()
@@ -247,7 +247,7 @@ def collection(auther, collection_name, heading, userMonth, userYear, *excelshee
 
         resales = ("https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=1%2C3&seller_blacklist"
                    "={}&buyer_blacklist={}&collection_name={}&page=1&limit=100&order"
-                   "=desc&sort=updated".format(auther, auther, collection_name))
+                   "=desc&sort=updated".format(author, author, collection_name))
         resales = requests.get(resales).text
         resales_ = json.loads(resales)
         print("getting resales")
@@ -290,12 +290,12 @@ def collection(auther, collection_name, heading, userMonth, userYear, *excelshee
             time.sleep(2)
             resales = ("https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=1%2C3&seller_blacklist"
                        "={}&buyer_blacklist={}&collection_name={}&before={}&page=1&limit=100&order"
-                       "=desc&sort=updated".format(auther, auther, collection_name, timef))
+                       "=desc&sort=updated".format(author, author, collection_name, timef))
             resales = requests.get(resales).text
             resales_ = json.loads(resales)
         time.sleep(4)
         resellOffer = ("https://proton.api.atomicassets.io/atomicmarket/v1/buyoffers?state=3&seller_blacklist={}"
-                       "&collection_name={}&page=1&limit=100&order=desc&sort=created".format(auther, collection_name))
+                       "&collection_name={}&page=1&limit=100&order=desc&sort=created".format(author, collection_name))
         resellOffer = requests.get(resellOffer).text
         resellOffer_ = json.loads(resellOffer)
         print("getting resales offers")
@@ -336,14 +336,14 @@ def collection(auther, collection_name, heading, userMonth, userYear, *excelshee
                         [seller, buyer, fixedC, fixedX, fixedL, name, number_of_nft, local_time])
             time.sleep(0.2)
             resellOffer = ("https://proton.api.atomicassets.io/atomicmarket/v1/buyoffers?state=3&seller_blacklist={}"
-                           "&collection_name={}&before={}&page=1&limit=100&order=desc&sort=created".format(auther, collection_name,
+                           "&collection_name={}&before={}&page=1&limit=100&order=desc&sort=created".format(author, collection_name,
                                                                                                            timef))
             resellOffer = requests.get(resellOffer).text
             resellOffer_ = json.loads(resellOffer)
 
         auctionResale = (
             "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&seller_blacklist={}&collection_name={}&page=1&limit=100&order=desc&sort=created".format(
-                auther, collection_name))
+                author, collection_name))
         auctionResale = requests.get(auctionResale).text
         auctionResale_ = json.loads(auctionResale)
         print("getting auction resales")
@@ -383,13 +383,13 @@ def collection(auther, collection_name, heading, userMonth, userYear, *excelshee
             time.sleep(.6)
             auctionResale = (
                 "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&seller_blacklist={}&collection_name={}"
-                "&before={}&page=1&limit=100&order=desc&sort=updated".format(auther, collection_name, timeMs))
+                "&before={}&page=1&limit=100&order=desc&sort=updated".format(author, collection_name, timeMs))
             auctionResale = requests.get(auctionResale).text
             auctionResale_ = json.loads(auctionResale)
         names_df = pd.DataFrame(data=all_list,
                                 columns=["first buyer ", "next buyer", "price paid usd", "price paid xpr", "price paid loans", "name", "# of nft", "time"])
         names_df.drop(names_df[names_df["first buyer "]
-                      == f"{auther}"].index, inplace=True)
+                      == f"{author}"].index, inplace=True)
         totals = names_df['price paid usd'].sum()
         Royalties = (totals * Royal)
         Rows = int(names_df.index.max() + 1)
@@ -417,8 +417,8 @@ def collection(auther, collection_name, heading, userMonth, userYear, *excelshee
             pages = pages + 1
             for data_info in holders_['data']:
                 holders = int(data_info['assets'])
-                authersName = data_info['account']
-                if authersName != "delaneycb":
+                authorsName = data_info['account']
+                if authorsName != "delaneycb":
                     holder_list.append([data_info['account'], holders])
             holders = ("https://proton.api.atomicassets.io/atomicassets/v1/accounts?collection_name={}"
                        "&page={}&limit=100&order=desc".format(collection_name, pages))
@@ -815,58 +815,58 @@ def collection(auther, collection_name, heading, userMonth, userYear, *excelshee
         wb.close()
         os.chdir(path.parent.absolute())
 
-    normalServic(authers, all, resales, FirstSale,
+    normalServic(authors, all, resales, FirstSale,
                  Holders, holders, *excelsheetname)
 
 
-auther = 'delaneycb'
+author = 'delaneycb'
 universe = 'Pecuilar inks & GGIP'
 heading = "{} Collection".format(universe)
 collection_name = '413424453454'
 collection1 = 'Pecuilar'
 excelsheetname1 = "{}.xlsx".format(collection1)
-collection(auther, collection_name, heading,
+collection(author, collection_name, heading,
            userMonth, userYear, excelsheetname1)
 collection_name = '521533225213'
 collection1 = 'Panda Boy Multiverse'
 excelsheetname1 = "{}.xlsx".format(collection1)
-collection(auther, collection_name, heading,
+collection(author, collection_name, heading,
            userMonth, userYear, excelsheetname1)
 collection_name = '312124133135'
 collection1 = 'Bomboy'
 time.sleep(6)
 excelsheetname1 = "{}.xlsx".format(collection1)
-collection(auther, collection_name, heading,
+collection(author, collection_name, heading,
            userMonth, userYear, excelsheetname1)
 collection_name = '451243333513'
 collection1 = 'Crypto Gorilla'
 time.sleep(6)
 excelsheetname1 = "{}.xlsx".format(collection1)
-collection(auther, collection_name, heading,
+collection(author, collection_name, heading,
            userMonth, userYear, excelsheetname1)
 collection_name = '135115145544'
 collection1 = 'Crypto Panda'
 time.sleep(6)
 excelsheetname1 = "{}.xlsx".format(collection1)
-collection(auther, collection_name, heading,
+collection(author, collection_name, heading,
            userMonth, userYear, excelsheetname1)
 collection_name = '132423131521'
 collection1 = 'Crypto Kevin'
 time.sleep(4)
 excelsheetname1 = "{}.xlsx".format(collection1)
-collection(auther, collection_name, heading,
+collection(author, collection_name, heading,
            userMonth, userYear, excelsheetname1)
 collection_name = '534133213533'
 collection1 = 'Crypto Steve '
 excelsheetname1 = "{}.xlsx".format(collection1)
 time.sleep(10)
-collection(auther, collection_name, heading,
+collection(author, collection_name, heading,
            userMonth, userYear, excelsheetname1)
 collection_name = '234141453513'
 collection1 = 'Crypto owls '
 excelsheetname1 = "{}.xlsx".format(collection1)
 time.sleep(10)
-collection(auther, collection_name, heading,
+collection(author, collection_name, heading,
            userMonth, userYear, excelsheetname1)
 
 buys_df = pd.DataFrame(data=totalBuyslist,
@@ -986,10 +986,10 @@ print("Creating the excel file")
 wb2.close()
 
 
-auther = 'ggip'
+author = 'ggip'
 collection_name = '241115151314'
 collection6 = 'GGIP'
 excelsheetname1 = "{}.xlsx".format(collection6)
 time.sleep(6)
-collection(auther, collection_name, heading,
+collection(author, collection_name, heading,
            userMonth, userYear, excelsheetname1)
