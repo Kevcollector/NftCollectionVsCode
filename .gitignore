@@ -121,7 +121,6 @@ cython_debug/
 .venv/Lib/site-packages/toml/__pycache__/decoder.cpython-310.pyc
 .venv/Lib/site-packages/toml/__pycache__/encoder.cpython-310.pyc
 .venv/Lib/site-packages/toml/__pycache__/tz.cpython-310.pyc
-<<<<<<< HEAD
 .venv/Lib/site-packages/__pycache__/socks.cpython-310.pyc
 .venv/Lib/site-packages/certifi/__pycache__/__init__.cpython-310.pyc
 .venv/Lib/site-packages/certifi/__pycache__/core.cpython-310.pyc
@@ -188,5 +187,4 @@ cython_debug/
 .venv/Lib/site-packages/urllib3/util/__pycache__/wait.cpython-310.pyc
 modules/__pycache__/ApiClass.cpython-310.pyc
 modules/__pycache__/SalesClass.cpython-310.pyc
-=======
->>>>>>> d35eefee84cc3ddadbb57f7c08193be8dc46e218
+
