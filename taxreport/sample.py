@@ -16,6 +16,7 @@ flippers_sell = (
     "https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=3&seller={}&page=1&limit=100&order=desc&sort=created".format(user))
 flippers_buys = (
     "https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=3&buyer={}&page=1&limit=100&order=desc&sort=created".format(user))
+# TODO add in the other apis ( offers, acutions), add this into the flippers_List_buy and sells recpectivly
 flippers_sell = requests.get(flippers_sell).text
 flippers_sell = json.loads(flippers_sell)
 flippers_buyt = requests.get(flippers_buys).text
@@ -37,6 +38,7 @@ while len(flippers_buy['data']) != 0:
         fixedC = 0
         fixedX = 0
         Type = data_info["listing_symbol"]
+        # TODO add in other coins loan and foobar (will need in all loops below too)
         if Type == "XPR":
             number = data_info["listing_price"]
             fixedX = int(number) / 10000
@@ -117,12 +119,13 @@ sells = pd.DataFrame(data=flippers_List_sell,
 sells.set_index("name of nft")
 
 
-paid = buyer['bought for usdc'].sum()
+paid = buyer['bought for usdc'].sum()  # TODO sum the other coins the same way
 sold = sells['sold for'].sum()
 mergedDf = pd.merge(buyer, sells, how='inner',
                     on='name of nft', suffixes=('', '_drop'))
 mergedDf.drop([col for col in mergedDf.columns if 'drop' in col],
               axis=1, inplace=True)
+# TODO more of these with the other coins
 mergedDf['profits'] = (mergedDf['sold for']-mergedDf['bought for usdc'])
 profits = mergedDf['profits'].sum()
 mbuys = mergedDf['bought for usdc'].sum()
@@ -146,7 +149,7 @@ for row in ws.rows:
 for col, value in dims.items():
     ws.column_dimensions[col].width = value
 maxrow = ws.max_row+2
-ws.cell(row=maxrow, column=6, value=paid)
+ws.cell(row=maxrow, column=6, value=paid)  # TODO add in more here
 ws.cell(row=maxrow, column=1, value="totals")
 ws2.title = ("{} Sells".format(user))
 for r in dataframe_to_rows(sells, index=False):
@@ -160,7 +163,7 @@ for row in ws2.rows:
 for col, value in dims.items():
     ws2.column_dimensions[col].width = value
 maxrow = ws2.max_row+2
-ws2.cell(row=maxrow, column=6, value=sold)
+ws2.cell(row=maxrow, column=6, value=sold)  # TODO add in more here
 ws2.cell(row=maxrow, column=1, value="totals")
 ws3.title = ("{} Flipping ".format(user))
 for r in dataframe_to_rows(mergedDf, index=False):
