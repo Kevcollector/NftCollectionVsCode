@@ -142,7 +142,8 @@ class ApiTransfersAuthor:
 
 
 class ApiTransfersOther:
-    def _init__(self, collection_name):
+
+    def _init__(self, collection_name: str):
         self.collection = collection_name
         TransfersOther = "https://proton.api.atomicassets.io/atomicassets/v1/transfers?collection_name={}&hide_contracts=true&page=1&limit=100&order=desc&sort=created".format(
             self.collection)

@@ -6,6 +6,7 @@ collection_name = "542514111454"
 
 authors = Api.ApiAuthor(author, collection_name)
 sales = Sale.Sales(authors.authors_)
-others = Api.ApiTransfersAuthor(author, collection_name)
-transfers = t.transfers(others.TranfersAuthor)
+auth = Api.ApiTransfersAuthor(author, collection_name)
+others = Api.ApiTransfersOther(collection_name)
+transfers = t.transfers(others.TransfersOther)
 transfers.printf()
