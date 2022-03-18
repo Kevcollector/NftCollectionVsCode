@@ -23,7 +23,7 @@ print(
 # mac=pathlib.Path().cwd() /'Desktop'
 # os.chdir(mac)
 
-auther = 'dragontm'
+author = 'dragontm'
 universe = 'DRAGONtm Creations'
 collection1 = 'DRAGONtm'
 collection2 = 'Baby Dino'
@@ -48,7 +48,7 @@ excelsheetname6 = "{}.xlsx".format(collection6)  # dino
 current = pathlib.Path().cwd()
 
 
-def collection(auther, collection_name, heading, *excelsheetname):
+def collection(author, collection_name, heading, *excelsheetname):
     collecion = "".join(excelsheetname)
     collecion = collecion.replace('.xlsx', '')
 
@@ -59,19 +59,13 @@ def collection(auther, collection_name, heading, *excelsheetname):
     else:
         pathlib.Path(path).mkdir(parents=True, exist_ok=True)
 
-
-    listed=("https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=1&collection_name={}&page=1&limit=100&order=asc&sort=price".format(collection_name))
-    listed=requests.get(listed)
-    listed_=json.loads(listed.text)
-    listed_done=[]
-
-
-
-
+    listed = ("https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=1&collection_name={}&page=1&limit=100&order=asc&sort=price".format(collection_name))
+    listed = requests.get(listed)
+    listed_ = json.loads(listed.text)
+    listed_done = []
 
     def normalServic(*excelsheetname):
         os.chdir(path)
-
 
         listed = (
             "https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=1&collection_name={}&page=1&limit=100&order=asc&sort=updated".format(
@@ -81,9 +75,9 @@ def collection(auther, collection_name, heading, *excelsheetname):
         wb2 = Workbook()
 
         wsL = wb2.active
-        wsL.title="Cheapest"
-        count=0
-        while len(listed_['data']) !=0:
+        wsL.title = "Cheapest"
+        count = 0
+        while len(listed_['data']) != 0:
             for data_info in listed_['data']:
                 seller = data_info['seller']
                 number = data_info["listing_price"]
@@ -92,94 +86,84 @@ def collection(auther, collection_name, heading, *excelsheetname):
                 ids = data_info['assets'][0]['template']['template_id']
                 number_of_nft = int(data_info['assets'][0]['template_mint'])
                 timef = data_info['updated_at_time']
-                amount=data_info['assets'][0]['template']['max_supply']
-                amount=amount+"/"+amount
-                link="https://protonmint.com/{}/{}".format(collection_name,ids)
-                listed_done.append([seller, fixed, name, number_of_nft,amount,link])
+                amount = data_info['assets'][0]['template']['max_supply']
+                amount = amount+"/"+amount
+                link = "https://protonmint.com/{}/{}".format(
+                    collection_name, ids)
+                listed_done.append(
+                    [seller, fixed, name, number_of_nft, amount, link])
                 count = count + 1
 
             time.sleep(0.4)
             listed = (
                 "https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=1&collection_name={}&after={}&page=1&limit=100&order=asc&sort=updated".format(
-                    collection_name,timef))
+                    collection_name, timef))
             listed = requests.get(listed)
             listed_ = json.loads(listed.text)
         listed_df = pd.DataFrame(data=listed_done,
-                                columns=["Seller", "Price", "Name", "# of NFT","Edition Size","Link"])
-        listed_df=listed_df.sort_values(by=['Price'], ascending=True)
-        count=0
+                                 columns=["Seller", "Price", "Name", "# of NFT", "Edition Size", "Link"])
+        listed_df = listed_df.sort_values(by=['Price'], ascending=True)
+        count = 0
 
         for r in dataframe_to_rows(listed_df, index=False):
-            count=count+1
+            count = count+1
             wsL.append(r)
             if count > 2:
-                link=wsL.cell(row=count-1, column=6).value
-                wsL.cell(row=count-1, column=6).value = '=HYPERLINK("{}", "{}")'.format(link,link)
+                link = wsL.cell(row=count-1, column=6).value
+                wsL.cell(
+                    row=count-1, column=6).value = '=HYPERLINK("{}", "{}")'.format(link, link)
                 wsL.cell(row=count-1, column=6).style = 'Hyperlink'
-        count=count+1
+        count = count+1
         link = wsL.cell(row=count - 1, column=6).value
-        wsL.cell(row=count - 1, column=6).value = '=HYPERLINK("{}", "{}")'.format(link, link)
+        wsL.cell(row=count - 1,
+                 column=6).value = '=HYPERLINK("{}", "{}")'.format(link, link)
         wsL.cell(row=count - 1, column=6).style = 'Hyperlink'
 
         dims = {}
         for row in wsL.rows:
             for cell in row:
                 if cell.value:
-                    dims[cell.column_letter] = max((dims.get(cell.column_letter, 0), len(str(cell.value))))
+                    dims[cell.column_letter] = max(
+                        (dims.get(cell.column_letter, 0), len(str(cell.value))))
         for col, value in dims.items():
             wsL.column_dimensions[col].width = value
-
-
 
         excelsave = "".join(excelsheetname)
         wb2.save('Listed'+excelsave)
         print("Creating the excel file")
         wb2.close()
 
-
-
-
         os.chdir(path.parent.absolute())
 
     normalServic(*excelsheetname)
 
 
-# collection(auther,collection_name,heading,excelsheetname1)
+# collection(author,collection_name,heading,excelsheetname1)
 
 
-auther = 'anderson22'
+author = 'anderson22'
 universe = 'Dragonslair'
 heading = "{} Collection".format(universe)
 collection_name = collection_name1
-collection(auther, collection_name, heading, excelsheetname5)
+collection(author, collection_name, heading, excelsheetname5)
 collection_name = collection_name2
 time.sleep(1)
-collection(auther, collection_name, heading,excelsheetname2)
+collection(author, collection_name, heading, excelsheetname2)
 collection_name = collection_name3
 time.sleep(1)
-collection(auther, collection_name, heading, excelsheetname3)
+collection(author, collection_name, heading, excelsheetname3)
 collection_name = collection_name5
 time.sleep(1)
-collection(auther, collection_name, heading, excelsheetname6)
-
-
-
-
-
-
-
-
-
-
+collection(author, collection_name, heading, excelsheetname6)
 
 
 '''
-auther = 'protoverse21'
+author = 'protoverse21'
 universe = 'Havas'
 heading = "{} Collection".format(universe)
 collection_name = '311251121121'
 collection6 = 'Havas'
 excelsheetname1 = "{}.xlsx".format(collection6)
 
-collection(auther, collection_name, heading, excelsheetname1)
+collection(author, collection_name, heading, excelsheetname1)
 '''
