@@ -554,11 +554,14 @@ def collection(auther, collection_name, heading, *excelsheetname):
                         (dims.get(cell.column_letter, 0), len(str(cell.value))))
         for col, value in dims.items():
             ws3.column_dimensions[col].width = value + 5
-        ws3.auto_filter.add_sort_condition("C2:C1000")
         excelsave = "".join(excelsheetname)
         wb.save(excelsave)
         print("Creating the excel file")
         wb.close()
+        edit = pd.read_excel(excelsave)
+        print(edit)
+        edit.sort_values(by=['crystals per week'])
+        print(edit)
         os.chdir(path.parent.absolute())
 
     normalServic(authers, all, resales, FirstSale,
