@@ -5,7 +5,9 @@ author = "crystalfrogs"
 collection_name = "542514111454"
 
 authors = Api.ApiAuthor(author, collection_name)
+authors.refresh
 sales = Sale.Sales(authors.authors_)
+
 others = Api.ApiTransfersAuthor(author, collection_name)
 transfers = t.transfers(others.TranfersAuthor)
 transfers.printf()
