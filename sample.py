@@ -1,3 +1,5 @@
+import modules.ApiClass as Api
+import time
 import json
 import os
 
@@ -14,31 +16,42 @@ sellPrice = 0
 profit = 0
 flippers_sell = (
     "https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=3&seller={}&page=1&limit=100&order=desc&sort=created".format(user))
+print(flippers_sell)
 flippers_buys = (
     "https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=3&buyer={}&page=1&limit=100&order=desc&sort=created".format(user))
-# TODO add in the other apis ( offers, acutions), add this into the flippers_List_buy and sells recpectivly
+
+flippers_auction = (
+    "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&seller={}&page=1&limit=100&order=desc&sort=created".format(user))
+# TODO add in the other apis ( offers, acutions), add this into the flippers_List_buy and sells recpectivly -Y
 flippers_sell = requests.get(flippers_sell).text
 flippers_sell = json.loads(flippers_sell)
 flippers_buyt = requests.get(flippers_buys).text
 flippers_buy = json.loads(flippers_buyt)
+flippers_auction = requests.get(flippers_auction).text
+flippers_auction = json.loads(flippers_auction)
 flippers_List_buy = []
 flippers_List_sell = []
+flippers_List_offer = []
+flippers_List_auction = []
 count = 0
+
+userdata = Api.ApiOffers(user)
 
 start = flippers_buyt.find(":")+1
 end = flippers_buyt.find(",")
 
 print(flippers_buyt[start:end])
 
-time = 0
 assitID2 = ""
 
 while len(flippers_buy['data']) != 0:
     for data_info in flippers_buy['data']:
         fixedC = 0
         fixedX = 0
+        fixedL = 0
+        fixedF = 0
         Type = data_info["listing_symbol"]
-        # TODO add in other coins loan and foobar (will need in all loops below too)
+        # TODO add in other coins loan and foobar (will need in all loops below too) -Y
         if Type == "XPR":
             number = data_info["listing_price"]
             fixedX = int(number) / 10000
@@ -46,6 +59,15 @@ while len(flippers_buy['data']) != 0:
         if Type == "XUSDC":
             number = data_info["listing_price"]
             fixedC = int(number) / 1000000
+
+        if Type == "LOAN":
+            number = data_info["listing_price"]
+            fixedL = int(number) / 10000
+
+        if Type == "FOOBAR":
+            number = data_info["listing_price"]
+            fixedF = int(number) / 10000
+
         number = data_info["listing_price"]
         buyPrice = int(number) / 1000000
         sellers = data_info['seller']
@@ -63,35 +85,53 @@ while len(flippers_buy['data']) != 0:
         if sellers != user and assitID1 != assitID2:
             assitID2 = assitID1
             flippers_List_buy.append(
-                [name, number_of_nft, Collection_n, author_n, sellers, fixedX, fixedC, local_time])
+                [name, number_of_nft, Collection_n, author_n, sellers, fixedX, fixedC, fixedL, fixedF, local_time])
 
     flippers_buy = (
         "https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=3&buyer={}&before={}&page=1&limit=100&order=desc&sort=updated".format(
             user, timef))
-    flippers_buyt = requests.get(flippers_buy).text
-    flippers_buy = json.loads(flippers_buyt)
-    len(flippers_buy['data'])
-    lent = len(flippers_buy['data'])
+    flippers_buyt = requests.get(flippers_buy)
+    waitUntilReset = int(flippers_buyt.headers['X-RateLimit-Reset'])
+    remainderPings = int(flippers_buyt.headers['X-RateLimit-Remaining'])
+    if remainderPings < 3:
+        wait = waitUntilReset-time.time()
+        time.sleep(wait)
+    flippers_buy = json.loads(flippers_buyt.text)
 
     # print(flippers_buy)
 
 
 buyer = pd.DataFrame(data=flippers_List_buy,
                      columns=["name of nft", "# of nft", "collection", "author", "bought from", "bought for Xpr", "bought for usdc",
-                              "time"])
+                              "bought for loan", "bought for foobar", "time"])
 
 buyer.set_index("name of nft")
 paidxpr = buyer['bought for Xpr'].sum()
 paidusd = buyer['bought for usdc'].sum()
 while len(flippers_sell['data']) != 0:
     for data_info in flippers_sell['data']:
+        if Type == "XPR":
+            number = data_info["listing_price"]
+            fixedX = int(number) / 10000
+
+        if Type == "XUSDC":
+            number = data_info["listing_price"]
+            fixedC = int(number) / 1000000
+
+        if Type == "LOAN":
+            number = data_info["listing_price"]
+            fixedL = int(number) / 10000
+
+        if Type == "FOOBAR":
+            number = data_info["listing_price"]
+            fixedF = int(number) / 10000
         number = data_info["listing_price"]
         fixed = int(number) / 1000000
         name = data_info['assets'][0]['name']
         buyers = data_info['buyer']
-        time = data_info['assets'][0]['transferred_at_time']
+        timet = data_info['assets'][0]['transferred_at_time']
         timef = data_info['updated_at_time']
-        time = int(time)/1000
+        timet = int(timet)/1000
         number_of_nft = int(data_info['assets'][0]['template_mint'])
         RoR = float(data_info['assets'][0]['collection']['market_fee'])
         fixed -= fixed * RoR
@@ -99,7 +139,7 @@ while len(flippers_sell['data']) != 0:
         Collection_n = data_info['assets'][0]['collection']['name']
         author_n = data_info['assets'][0]['collection']['author']
         local_time = datetime.utcfromtimestamp(
-            time).strftime('%d-%m-%Y %H:%M:%S')
+            timet).strftime('%d-%m-%Y %H:%M:%S')
         assitID1 = data_info['assets'][0]['asset_id']
         if assitID1 == assitID2:
             print(buyPrice)
@@ -118,6 +158,7 @@ sells = pd.DataFrame(data=flippers_List_sell,
                               "sold to ", "sold for"])
 sells.set_index("name of nft")
 
+# while len(flippers_offer['data']) != 0:
 
 paid = buyer['bought for usdc'].sum()  # TODO sum the other coins the same way
 sold = sells['sold for'].sum()

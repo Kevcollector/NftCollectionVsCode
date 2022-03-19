@@ -7,9 +7,9 @@ collection_name = "542514111454"
 authors = Api.ApiAuthor(author, collection_name)
 authors.refresh
 sales = Sale.Sales(authors.authors_)
+offerResale = Api.ApiOfferResales(author, collection_name)
+print(offerResale)
 auth = Api.ApiTransfersAuthor(author, collection_name)
-others = Api.ApiTransfersOther(collection_name)
-transfers = t.transfers(others.TransfersOther)
 others = Api.ApiTransfersAuthor(author, collection_name)
 transfers = t.transfers(others.TranfersAuthor)
 transfers.printf()
