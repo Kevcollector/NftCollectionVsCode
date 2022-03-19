@@ -17,7 +17,7 @@ __pycache__/
 *.pyc
 *$py.class
 
-.xlsx
+*.xlsx
 
 # Distribution / packaging
 .Python
