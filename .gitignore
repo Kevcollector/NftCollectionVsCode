@@ -189,3 +189,4 @@ cython_debug/
 modules/__pycache__/ApiClass.cpython-310.pyc
 modules/__pycache__/SalesClass.cpython-310.pyc
 
+*.log
