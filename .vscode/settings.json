@@ -13,7 +13,5 @@
     "cSpell.words": [
         "openpyxl"
     ],
-    "python.testing.pytestArgs": [
-        "modules"
-    ]
+    "python.formatting.provider": "black"
 }
