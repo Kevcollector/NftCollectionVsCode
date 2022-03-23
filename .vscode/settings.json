@@ -12,5 +12,6 @@
     "editor.formatOnSave": true,
     "cSpell.words": [
         "openpyxl"
-    ]
+    ],
+    "python.formatting.provider": "black"
 }

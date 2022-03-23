@@ -16,7 +16,7 @@ __pycache__/
 *.py[cod]
 *.pyc
 *$py.class
-
+*.xlsx
 
 # Distribution / packaging
 .Python
