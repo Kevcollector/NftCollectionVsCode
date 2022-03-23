@@ -2,6 +2,8 @@ import requests
 import json
 import time
 
+author = "kevcollector"
+
 
 class ApiAuthor:
     def __init__(self, author, collection_name):
@@ -82,134 +84,11 @@ class ApiResales:
 
 
 class ApiOffersAuthor:
-    def __init__(self, author, collection_name):
-        self.author = author
-        self.collection = collection_name
-        OfferAuthor = "https://proton.api.atomicassets.io/atomicassets/v1/offers?collection_name={}&hide_contracts=true&sender={}&page=1&limit=100&order=desc&sort=created".format(
-            self.collection, self.author)
-        print(OfferAuthor)
-        OfferAuthor = requests.get(OfferAuthor)
-        waitUntilReset = int(OfferAuthor.headers['X-RateLimit-Reset'])
-        remainderPings = int(OfferAuthor.headers['X-RateLimit-Remaining'])
-        if remainderPings < 3:
-            wait = waitUntilReset-time.time()
-            time.sleep(wait)
-        self.OfferAuthor = json.loads(OfferAuthor.text)
-        print("getting your offers")
-
-    def update(self, time):
-        OfferAuthor = "https://proton.api.atomicassets.io/atomicassets/v1/offers?collection_name={}&hide_contracts=true&sender={}&before={}&page=1&limit=100&order=desc&sort=created".format(
-            self.collection, self.author, time)
-        print(OfferAuthor)
-        OfferAuthor = requests.get(OfferAuthor)
-        waitUntilReset = int(OfferAuthor.headers['X-RateLimit-Reset'])
-        remainderPings = int(OfferAuthor.headers['X-RateLimit-Remaining'])
-        if remainderPings < 3:
-            wait = waitUntilReset-time.time()
-            time.sleep(wait)
-        self.OfferAuthor = json.loads(OfferAuthor.text)
-        print("getting your offers (again)")
-        return self.OfferAuthor
-
-    def refersh(self, time):
-        OfferAuthor = "https://proton.api.atomicassets.io/atomicassets/v1/offers?collection_name={}&hide_contracts=true&sender={}&after{}&page=1limit=100&order=desc&sort=created".format(
-            self.collection, self.author, time)
-        OfferAuthor = requests.get(OfferAuthor)
-        waitUntilReset = int(OfferAuthor.headers['X-RateLimit-Reset'])
-        remainderPings = int(OfferAuthor.headers['X-RateLimit-Remaining'])
-        if remainderPings < 3:
-            wait = waitUntilReset-time.time()
-            time.sleep(wait)
-        self.OfferAuthor = json.loads(OfferAuthor.text)
-        print("getting your offers (again)")
-        return self.OfferAuthor
-
-
-class ApiOffers:
-    def __init__(self, user, ):
-        self.user = user
-        OfferUser = "https://proton.api.atomicassets.io/atomicassets/v1/offers?&hide_contracts=true&sender={}&page=1&limit=100&order=desc&sort=created".format(
-            self.user)
-        print(OfferUser)
-        OfferUser = requests.get(OfferUser)
-        waitUntilReset = int(OfferUser.headers['X-RateLimit-Reset'])
-        remainderPings = int(OfferUser.headers['X-RateLimit-Remaining'])
-        if remainderPings < 3:
-            wait = waitUntilReset-time.time()
-            time.sleep(wait)
-        self.OfferUser = json.loads(OfferUser.text)
-        print("getting your offers")
-
-    def update(self, time):
-        OfferUser = "https://proton.api.atomicassets.io/atomicassets/v1/offers?&hide_contracts=true&sender={}&before={}&page=1&limit=100&order=desc&sort=created".format(
-            self.user, time)
-        print(OfferUser)
-        OfferUser = requests.get(OfferUser)
-        waitUntilReset = int(OfferUser.headers['X-RateLimit-Reset'])
-        remainderPings = int(OfferUser.headers['X-RateLimit-Remaining'])
-        if remainderPings < 3:
-            wait = waitUntilReset-time.time()
-            time.sleep(wait)
-        self.OfferUser = json.loads(OfferUser.text)
-        print("getting your offers (again)")
-        return self.OfferUser
-
-    def refersh(self, time):
-        OfferUser = "https://proton.api.atomicassets.io/atomicassets/v1/offers?&hide_contracts=true&sender={}&after{}&page=1limit=100&order=desc&sort=created".format(
-            self.user, time)
-        OfferUser = requests.get(OfferUser)
-        waitUntilReset = int(OfferUser.headers['X-RateLimit-Reset'])
-        remainderPings = int(OfferUser.headers['X-RateLimit-Remaining'])
-        if remainderPings < 3:
-            wait = waitUntilReset-time.time()
-            time.sleep(wait)
-        self.OfferUser = json.loads(OfferUser.text)
-        print("getting your offers (again)")
-        return self.OfferUser
+    pass
 
 
 class ApiOfferResales:
-    def __init__(self, author, collection_name):
-        self.author = author
-        self.collection = collection_name
-        OfferResales = "https://proton.api.atomicassets.io/atomicassets/v1/offers?collection_name={}&seller_blacklist={}&buyer_blacklist={}&page=1&limit=100&order=desc&sort=created".format(
-            self.collection, self.author, self.author)
-        print(OfferResales)
-        OfferResales = requests.get(OfferResales)
-        waitUntilReset = int(OfferResales.headers['X-RateLimit-Reset'])
-        remainderPings = int(OfferResales.headers['X-RateLimit-Remaining'])
-        if remainderPings < 3:
-            wait = waitUntilReset-time.time()
-            time.sleep(wait)
-        self.OfferResales = json.loads(OfferResales.text)
-        print("getting your offers")
-
-    def update(self, time):
-        OfferResales = "https://proton.api.atomicassets.io/atomicassets/v1/offers?collection_name={}&seller_blacklist={}&buyer_blacklist={}&before={}&page=1&limit=100&order=desc&sort=created".format(
-            self.collection, self.author, self.author, time)
-        print(OfferResales)
-        OfferResales = requests.get(OfferResales)
-        waitUntilReset = int(OfferResales.headers['X-RateLimit-Reset'])
-        remainderPings = int(OfferResales.headers['X-RateLimit-Remaining'])
-        if remainderPings < 3:
-            wait = waitUntilReset-time.time()
-            time.sleep(wait)
-        self.OfferResales = json.loads(OfferResales.text)
-        print("getting your offers (again)")
-        return self.OfferResales
-
-    def refersh(self, time):
-        OfferResales = "https://proton.api.atomicassets.io/atomicassets/v1/offers?collection_name={}&seller_blacklist={}&buyer_blacklist={}&after{}&page=1limit=100&order=desc&sort=created".format(
-            self.collection, self.author, self.author, time)
-        OfferResales = requests.get(OfferResales)
-        waitUntilReset = int(OfferResales.headers['X-RateLimit-Reset'])
-        remainderPings = int(OfferResales.headers['X-RateLimit-Remaining'])
-        if remainderPings < 3:
-            wait = waitUntilReset-time.time()
-            time.sleep(wait)
-        self.OfferResales = json.loads(OfferResales.text)
-        print("getting your offers (again)")
-        return self.OfferResales
+    pass
 
 
 class ApiAuctionsAuthor:
