@@ -1,5 +1,6 @@
 import json
 import os
+from wsgiref.simple_server import WSGIServer
 import pandas as pd
 import requests as requests
 import pathlib
@@ -54,7 +55,7 @@ def collection(author, collection_name, heading, *excelsheetname):
 
     holder_list = []
 
-    def normalServic(holders, *excelsheetname):
+    def normalServic(author, holders, *excelsheetname):
         global totalholderslist
         os.chdir(path)
 
@@ -62,33 +63,6 @@ def collection(author, collection_name, heading, *excelsheetname):
         ws1 = wb1.active
         ws1.title = "holders"
 
-        holders = (
-            "https://proton.api.atomicassets.io/atomicassets/v1/accounts?collection_name={}"
-            "&page=1&limit=100&order=desc".format(collection_name)
-        )
-        holders = requests.get(holders).text
-        holders_ = json.loads(holders)
-        pages = 1
-        while len(holders_["data"]) != 0:
-            pages = pages + 1
-            for data_info in holders_["data"]:
-                holders = int(data_info["assets"])
-                authorsName = data_info["account"]
-                if authorsName != :
-                    holder_list.append([data_info["account"], holders])
-            holders = (
-                "https://proton.api.atomicassets.io/atomicassets/v1/accounts?collection_name={}"
-                "&page={}&limit=100&order=desc".format(collection_name, pages)
-            )
-            holders = requests.get(holders).text
-            holders_ = json.loads(holders)
-        holder_df = pd.DataFrame(data=holder_list, columns=["account ", "amount held"])
-        len(holder_df) - 1
-        count = 0
-        rowz = 1
-        for r in dataframe_to_rows(holder_df, index=False):
-            ws1.append(r)
-        
         pages = 0
         holders = (
             "https://proton.api.atomicassets.io/atomicassets/v1/accounts?collection_name={}"
@@ -97,16 +71,15 @@ def collection(author, collection_name, heading, *excelsheetname):
         holders = requests.get(holders).text
         holders_ = json.loads(holders)
         amount = 1
+        rowz = 0
 
         gorillaCount = 0
         while len(holders_["data"]) != 0:
             pages = pages + 1
             amount = amount + 1
             for data_info in holders_["data"]:
-                if data_info["account"] != "delaneycb":
+                if data_info["account"] != author:
                     checker = data_info["account"]
-                    if rowz != 1:
-                        temp2 = ws1.cell(row=rowz, column=3).value
                     print("getting {}'s data".format(checker))
                     people = "https://proton.api.atomicassets.io/atomicmarket/v1/assets?collection_name={}&owner={}&page=1&limit=100&order=desc&sort=asset_id".format(
                         collection_name, checker
@@ -120,7 +93,6 @@ def collection(author, collection_name, heading, *excelsheetname):
                     if resset < 3:
                         time.sleep(wait)
                     people_ = json.loads((test.text))
-                    time.sleep(0.2)
                     count = 0
                     pages = 1
                     rowz = rowz + 1
@@ -129,7 +101,7 @@ def collection(author, collection_name, heading, *excelsheetname):
                     while len(people_["data"]) != 0:
                         pages = pages + 1
                         if pages >= 3:
-                            count =  pages * 100
+                            count = pages * 100
                         for data_info in people_["data"]:
                             word = data_info["data"]["desc"]
                             nft_name = data_info["data"]["name"]
@@ -141,17 +113,29 @@ def collection(author, collection_name, heading, *excelsheetname):
                                 if not "GGIP Proton Gorilla" in nft_name:
                                     count = count + 1
 
-                                    ws1.cell(row=rowz, column=3 + count).value = (
+                                    ws1.cell(row=rowz, column=2 + count).value = (
                                         done + " (#" + number_of_nft + ")"
                                     )
+                                if count > 0:
+                                    ws1.cell(
+                                        row=1, column=2 + count
+                                    ).value = "NFT " + str(count)
+                                    ws1.cell(row=1, column=1).value = "Account"
+                                    ws1.cell(row=1, column=2).value = "Amount"
+                                    ws1.cell(row=rowz, column=1).value = checker
+                                    ws1.cell(row=rowz, column=2).value = count
 
                                 else:
                                     gorillaCount += 1
-                                    totalnftnumber = ws1.cell(row=rowz, column=2).value
-                                    totalnftnumber = int(totalnftnumber) - 1
-                                    ws1.cell(row=rowz, column=2).value = int(
-                                        totalnftnumber
-                                    )
+                                    if count > 0:
+                                        totalnftnumber = ws1.cell(
+                                            row=rowz, column=2
+                                        ).value
+                                        if totalnftnumber != 0:
+                                            totalnftnumber = int(totalnftnumber) - 1
+                                            ws1.cell(row=rowz, column=2).value = int(
+                                                totalnftnumber
+                                            )
 
                         people = "https://proton.api.atomicassets.io/atomicmarket/v1/assets?collection_name={}&owner={}&page={}&limit=100&order=desc&sort=asset_id".format(
                             collection_name, checker, pages
@@ -165,7 +149,6 @@ def collection(author, collection_name, heading, *excelsheetname):
                         if resset < 3:
                             time.sleep(wait)
                         people_ = json.loads((test.text))
-                        time.sleep(0.2)
 
                     holders_amount = ws1.cell(row=rowz, column=2).value
 
@@ -192,10 +175,12 @@ def collection(author, collection_name, heading, *excelsheetname):
         excelsave = "".join(excelsheetname)
         wb1.save(excelsave)
         print("Creating the excel file")
+
         wb1.close()
+
         os.chdir(path.parent.absolute())
 
-    normalServic(holders, *excelsheetname)
+    normalServic(author, holders, *excelsheetname)
 
 
 author = "ggip"
