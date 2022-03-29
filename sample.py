@@ -14,6 +14,7 @@ user = 'goattude'
 buyPrice = 0
 sellPrice = 0
 profit = 0
+
 flippers_sell = (
     "https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=3&seller={}&page=1&limit=100&order=desc&sort=created".format(user))
 print(flippers_sell)
@@ -31,8 +32,6 @@ flippers_auction = requests.get(flippers_auction).text
 flippers_auction = json.loads(flippers_auction)
 flippers_List_buy = []
 flippers_List_sell = []
-flippers_List_offer = []
-flippers_List_auction = []
 count = 0
 
 userdata = Api.ApiOffers(user)
@@ -110,32 +109,37 @@ paidxpr = buyer['bought for Xpr'].sum()
 paidusd = buyer['bought for usdc'].sum()
 while len(flippers_sell['data']) != 0:
     for data_info in flippers_sell['data']:
+        fixedC = 0
+        fixedX = 0
+        fixedL = 0
+        fixedF = 0
+        Type = data_info["listing_symbol"]
+        RoR = float(data_info['assets'][0]['collection']['market_fee'])
         if Type == "XPR":
             number = data_info["listing_price"]
             fixedX = int(number) / 10000
+            fixedX-=(RoR*fixedX)
 
         if Type == "XUSDC":
             number = data_info["listing_price"]
             fixedC = int(number) / 1000000
+            fixedC-=(RoR*fixedC)
 
         if Type == "LOAN":
             number = data_info["listing_price"]
             fixedL = int(number) / 10000
+            fixedL-=(RoR*fixedL)
 
         if Type == "FOOBAR":
             number = data_info["listing_price"]
             fixedF = int(number) / 10000
-        number = data_info["listing_price"]
-        fixed = int(number) / 1000000
+            fixedF-=(RoR*fixedF)
         name = data_info['assets'][0]['name']
         buyers = data_info['buyer']
         timet = data_info['assets'][0]['transferred_at_time']
         timef = data_info['updated_at_time']
         timet = int(timet)/1000
         number_of_nft = int(data_info['assets'][0]['template_mint'])
-        RoR = float(data_info['assets'][0]['collection']['market_fee'])
-        fixed -= fixed * RoR
-        sellPrice = fixed
         Collection_n = data_info['assets'][0]['collection']['name']
         author_n = data_info['assets'][0]['collection']['author']
         local_time = datetime.utcfromtimestamp(
@@ -146,12 +150,59 @@ while len(flippers_sell['data']) != 0:
         if author_n != user and assitID1 != assitID2:
             assitID2 = assitID1
             flippers_List_sell.append(
-                [name, number_of_nft, Collection_n, author_n,  buyers, sellPrice])
+                [name, number_of_nft, Collection_n, author_n,  buyers, fixedC,fixedX,fixedL,fixedF])
     flippers_sell = (
         "https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=3&seller={}&before={}&page=1&limit=100&order=desc&sort=updated".format(
             user, timef))
     flippers_sell = requests.get(flippers_sell).text
     flippers_sell = json.loads(flippers_sell)
+flippers_buy_auctions = (
+            "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&buyer={}&page=1&limit=100&order=desc&sort=created".format(
+                user))
+auctions = requests.get(flippers_buy_auctions).text
+auctions_ = json.loads(auctions)
+while len(auctions_['data']) != 0:
+    for data_info in auctions_['data']:
+        fixedC = 0
+        fixedX = 0
+        fixedL = 0
+        Type = data_info['price']['token_symbol']
+        if Type == "XPR":
+            number = data_info['price']['amount']
+            fixedX = int(number) / 10000
+
+        if Type == "XUSDC":
+            number = data_info['price']['amount']
+            fixedC = int(number) / 1000000
+
+        if Type == "LOAN":
+            number = data_info['price']['amount']
+            fixedL = int(number) / 10000
+
+        name = data_info['assets'][0]['name']
+        timez = data_info['assets'][0]['transferred_at_time']
+        timeMs = data_info['created_at_time']
+        timeSec = int(timeMs) / 1000
+        number_of_nft = int(data_info['assets'][0]['template_mint'])
+        buyer = data_info['buyer']
+        seller = data_info['seller']
+        local_time = datetime.utcfromtimestamp(
+            timeSec).strftime('%m-%d-%Y %H:%M:%S')
+
+        flippers_buys.append(
+            [seller, fixedC, fixedX, fixedL, buyer, number_of_nft, name, local_time])
+
+    auctions = (
+        "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&seller={}"
+        "&before={}&page=1&limit=100&order=desc&sort=created".format(user,timeMs))
+    auctions = requests.get(auctions).text
+    auctions_ = json.loads(auctions)
+    
+    
+while len(flippersSellOffers['data'])!= 0:
+    pass
+while len(flippersBuyOffers['data'])!= 0:
+    pass
 
 sells = pd.DataFrame(data=flippers_List_sell,
                      columns=["name of nft", "# of nft", "collection", "author",
