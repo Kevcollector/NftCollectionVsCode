@@ -71,9 +71,8 @@ def collection(author, collection_name, heading, *excelsheetname):
         )
         holders = requests.get(holders).text
         holders_ = json.loads(holders)
-        amount = 1
+        amount = 0
         rowz = 0
-
         wolfCount = 0
         while len(holders_["data"]) != 0:
             pages = pages + 1
@@ -95,46 +94,75 @@ def collection(author, collection_name, heading, *excelsheetname):
                         time.sleep(wait)
                     people_ = json.loads((test.text))
                     count = 0
-                    pages = 1
+                    wolfPoints = 0
                     rowz = rowz + 1
+                    pages = 1
                     assitID2 = " "
 
                     while len(people_["data"]) != 0:
                         pages = pages + 1
                         if pages >= 3:
                             count = pages * 100
+
                         for data_info in people_["data"]:
-                            word = data_info["data"]["desc"]
                             nft_name = data_info["data"]["name"]
-                            number_of_nft = data_info["template_mint"]
                             assitID1 = data_info["asset_id"]
                             if assitID1 != assitID2:
                                 assitID2 = assitID1
                                 done = nft_name
-                                if "524211545444" in collection_name:
-                                    if "Proton Wolf Clan" in nft_name:
-                                        count = count + 1
 
-                                        ws1.cell(row=rowz, column=2 + count).value = (
-                                            done + " (#" + number_of_nft + ")"
-                                        )
-                                    else:
-                                        Pass
-                                if "3drfwzczslri" in collection_name:
-                                    if "Proton Wolf Clan 2" in nft_name:
-                                        count = count + 1
+                                # if "524211545444" in collection_name:
+                                # insert lookup table here
 
-                                        ws1.cell(row=rowz, column=2 + count).value = (
-                                            done + " (#" + number_of_nft + ")"
-                                        )
-                                    else:
-                                        Pass
+                                # if "3drfwzczslri" in collection_name:
+
+                                if "Proton Wolf Clan 2" in nft_name:
+                                    count = count + 1
+
+                                    if "Special" in nft_name:
+                                        ws1.cell(
+                                            row=rowz, column=3).value = wolfPoints+0
+                                    if "COMMON" in nft_name:
+                                        ws1.cell(
+                                            row=rowz, column=3).value = wolfPoints+2
+                                    if "RARE" in nft_name:
+                                        ws1.cell(
+                                            row=rowz, column=3).value = wolfPoints+5
+                                    if "EPIC" in nft_name:
+                                        ws1.cell(
+                                            row=rowz, column=3).value = wolfPoints+7
+                                    if "HEROIC" in nft_name:
+                                        ws1.cell(
+                                            row=rowz, column=3).value = wolfPoints+9
+                                    if "ULTRA RARE" in nft_name:
+                                        ws1.cell(
+                                            row=rowz, column=3).value = wolfPoints+10
+                                    if "ULTRA EPIC" in nft_name:
+                                        ws1.cell(
+                                            row=rowz, column=3).value = wolfPoints+14
+                                    if "LEGENDARY" in nft_name:
+                                        ws1.cell(
+                                            row=rowz, column=3).value = wolfPoints+15
+                                    ws1.cell(row=rowz, column=2 +
+                                             count).value = (done)
+                                elif "FUSION" in nft_name:
+                                    if "ULTRA RARE" in nft_name:
+                                        ws1.cell(
+                                            row=rowz, column=3).value = wolfPoints+10
+                                    if "ULTRA EPIC" in nft_name:
+                                        ws1.cell(
+                                            row=rowz, column=3).value = wolfPoints+14
+                                else:
+                                    print(nft_name)
+                                    pass
+
                                 if count > 0:
                                     ws1.cell(
-                                        row=1, column=2 + count
+                                        row=1, column=3 + count
                                     ).value = "NFT " + str(count)
                                     ws1.cell(row=1, column=1).value = "Account"
                                     ws1.cell(row=1, column=2).value = "Amount"
+                                    ws1.cell(row=1, column=3).value = "Points"
                                     ws1.cell(
                                         row=rowz, column=1).value = checker
                                     ws1.cell(row=rowz, column=2).value = count
@@ -167,7 +195,8 @@ def collection(author, collection_name, heading, *excelsheetname):
 
                     holders_amount = ws1.cell(row=rowz, column=2).value
 
-                    totalholderslist.append([checker, holders_amount])
+                    totalholderslist.append(
+                        [checker, holders_amount, wolfPoints])
 
             holders = (
                 "https://proton.api.atomicassets.io/atomicassets/v1/accounts?collection_name={}"
@@ -215,12 +244,10 @@ wb2 = Workbook()
 ws1 = wb2.active
 ws1 = wb2.create_sheet("holders")
 holders_df = pd.DataFrame(data=totalholderslist, columns=[
-                          "account", "amount held"])
+                          "account", "amount held", "points"])
 
 print(totalholderslist)
-holders_df = holders_df.groupby(["account"]).agg(
-    {"account": "min", "amount held": "sum"}
-)
+
 holders_df = holders_df.sort_values(by=["amount held"], ascending=False)
 
 
