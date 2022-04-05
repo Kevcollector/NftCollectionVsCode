@@ -1,6 +1,7 @@
 import json
 import os
 from wsgiref.simple_server import WSGIServer
+import numpy as np
 import pandas as pd
 import requests as requests
 import pathlib
@@ -89,15 +90,22 @@ def collection(author, collection_name, heading, *excelsheetname):
                     resset = test.headers["X-RateLimit-Remaining"]
                     resset = int(resset)
                     next = int(next)
-                    wait = next - time.time()
-                    if resset < 3:
-                        time.sleep(wait)
-                    people_ = json.loads((test.text))
+                    timed = time.time()
+                    wait = next - timed
+                    if resset < 2:
+                        if wait < 0:
+                            time.sleep(10)
+                            people_ = json.loads((test.text))
+                        else:
+                            print(str(wait) + "=" + str(next) + "-" + str(timed))
+                            time.sleep(wait)
+                            people_ = json.loads((test.text))
+                    else:
+                        people_ = json.loads((test.text))
                     count = 0
                     pages = 1
                     rowz = rowz + 1
                     assitID2 = " "
-
                     while len(people_["data"]) != 0:
                         pages = pages + 1
                         if pages >= 3:
@@ -145,9 +153,14 @@ def collection(author, collection_name, heading, *excelsheetname):
                         resset = test.headers["X-RateLimit-Remaining"]
                         resset = int(resset)
                         next = int(next)
-                        wait = next - time.time()
-                        if resset < 3:
-                            time.sleep(wait)
+                        timed = time.time()
+                        wait = next - timed
+                        if resset < 2:
+                            if wait < 0:
+                                time.sleep(1)
+                            else:
+                                print(str(wait) + "=" + str(next) + "-" + str(timed))
+                                time.sleep(wait)
                         people_ = json.loads((test.text))
 
                     holders_amount = ws1.cell(row=rowz, column=2).value
@@ -189,12 +202,11 @@ heading = "{} Collection".format(universe)
 collection_name = "kxlulfrvzsdd"
 collection1 = "GGIP"
 excelsheetname1 = "{}.xlsx".format(collection1)
-time.sleep(6)
 collection(author, collection_name, heading, excelsheetname1)
 collection_name = "241115151314"
 collection2 = "PLC"
 excelsheetname1 = "{}.xlsx".format(collection2)
-time.sleep(6)
+time.sleep(10)
 collection(author, collection_name, heading, excelsheetname1)
 wb2 = Workbook()
 ws1 = wb2.active
@@ -205,10 +217,23 @@ print(totalholderslist)
 holders_df = holders_df.groupby(["account"]).agg(
     {"account": "min", "amount held": "sum"}
 )
-holders_df = holders_df.loc[(holders_df != 0).any(axis=1)]
+holders_df = holders_df[~(holders_df == 0).any(axis=1)]
+
 holders_df = holders_df.sort_values(by=["amount held"], ascending=False)
+path = pathlib.Path().cwd() / ("{}".format(heading))
 
-
+os.chdir(path)
+edit = pd.read_excel("PLC.xlsx", 0, index_col=False)
+edit["Account"].replace(" ", np.nan, inplace=True)
+edit.dropna(subset=["Account"], inplace=True)
+edit.sort_values(by=["Amount"], ascending=False, inplace=True)
+os.remove("PLC.xlsx")
+wb3 = Workbook()
+ws = wb3.active
+ws.title = "Holders"
+writeToExcel(ws, edit)
+wb3.save("PLC.xlsx")
+wb3.close
 writeToExcel(ws1, holders_df)
 wb2.save("totalholderslist.xlsx")
 wb2.close()
