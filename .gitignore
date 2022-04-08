@@ -16,8 +16,7 @@ __pycache__/
 *.py[cod]
 *.pyc
 *$py.class
-
-.xlsx
+*.xlsx
 
 # Distribution / packaging
 .Python
@@ -189,3 +188,4 @@ cython_debug/
 modules/__pycache__/ApiClass.cpython-310.pyc
 modules/__pycache__/SalesClass.cpython-310.pyc
 
+*.log
