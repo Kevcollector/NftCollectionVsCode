@@ -485,7 +485,8 @@ def collection(auther, collection_name, heading, *excelsheetname):
                                 count = count + 1
                                 ws3.cell(
                                     row=1, column=3).value = "crystals per week"
-                                ws3.cell(row=1, column=4).value = "crystals"
+                                ws3.cell(
+                                    row=1, column=4).value = "total crystals"
                                 ws3.cell(row=1, column=5).value = "miner"
                                 ws3.cell(row=1, column=6).value = "wizard"
                                 ws3.cell(row=1, column=7).value = "lord"
