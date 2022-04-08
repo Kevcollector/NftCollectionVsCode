@@ -30,6 +30,7 @@ mergedDf["profits XPR"] = mergedDf["sold for xpr"] - mergedDf["bought for Xpr"]
 mergedDf["profits LOAN"] = mergedDf["sold for loan"] - mergedDf["bought for loan"]
 mergedDf["profits Foobar"] = mergedDf["sold for foobar"] - mergedDf["bought for foobar"]
 
+
 profits_USD = mergedDf["profits USDC"].sum()
 profits_XPR = mergedDf["profits XPR"].sum()
 profits_LOAN = mergedDf["profits LOAN"].sum()
