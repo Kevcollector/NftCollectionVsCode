@@ -419,6 +419,10 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
                 "={}&buyer_blacklist={}&collection_name={}&before={}&page=1&limit=100&order"
                 "=desc&sort=updated".format(
                     author, author, collection_name, timef)
+<<<<<<< HEAD
+=======
+                "=desc&sort=updated".format(author, author, collection_name, timef)
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
             )
             resales = requests.get(resales).text
             resales_ = json.loads(resales)
@@ -587,6 +591,10 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
         names_df.drop(
             names_df[names_df["first buyer "] ==
                      f"{author}"].index, inplace=True
+<<<<<<< HEAD
+=======
+            names_df[names_df["first buyer "] == f"{author}"].index, inplace=True
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
         )
         totals = names_df["price paid usd"].sum()
         Royalties = totals * Royal
@@ -811,6 +819,10 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
                                         print(gorilaPoints)
                                         temp1 = ws3.cell(
                                             row=rowz, column=3).value
+<<<<<<< HEAD
+=======
+                                        temp1 = ws3.cell(row=rowz, column=3).value
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
                                         ws3.cell(row=rowz, column=3).value = temp1 + (
                                             gorilaPoints * 4
                                         )
@@ -853,6 +865,10 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
                                         ws3.cell(row=rowz, column=3 + count).value = (
                                             done +
                                             " (#" + number_of_nft + ")" + word
+<<<<<<< HEAD
+=======
+                                            done + " (#" + number_of_nft + ")" + word
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
                                         )
 
                                     if (
@@ -866,6 +882,10 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
                                         ws3.cell(row=rowz, column=3 + count).value = (
                                             done +
                                             " (#" + number_of_nft + ")" + word
+<<<<<<< HEAD
+=======
+                                            done + " (#" + number_of_nft + ")" + word
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
                                         )
                                         ws3.cell(row=rowz, column=3).value = int(
                                             10
@@ -888,6 +908,10 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
                                             ).value = (
                                                 done +
                                                 " (#" + number_of_nft + ")"
+<<<<<<< HEAD
+=======
+                                                done + " (#" + number_of_nft + ")"
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
                                             )
                                         else:
                                             ws3.cell(
@@ -1028,6 +1052,10 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
                                                         i = placehodler + " " + i
                                                         print(
                                                             i + " " + str(lookup[i]))
+<<<<<<< HEAD
+=======
+                                                        print(i + " " + str(lookup[i]))
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
                                                         ws3.cell(
                                                             row=rowz, column=3
                                                         ).value = int(lookup[i]) + int(
@@ -1073,6 +1101,10 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
                                                         i = placehodler + " " + i
                                                         print(
                                                             i + " " + str(lookup[i]))
+<<<<<<< HEAD
+=======
+                                                        print(i + " " + str(lookup[i]))
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
                                                         ws3.cell(
                                                             row=rowz, column=3
                                                         ).value = int(lookup[i]) + int(
@@ -1084,6 +1116,10 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
                                                     else:
                                                         print(
                                                             i + " " + str(lookup[i]))
+<<<<<<< HEAD
+=======
+                                                        print(i + " " + str(lookup[i]))
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
                                                         ws3.cell(
                                                             row=rowz, column=3
                                                         ).value = int(lookup[i]) + int(
@@ -1100,6 +1136,10 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
                                                         points = int(lookup[i])
                                                         print(
                                                             done + str(lookup[i]))
+<<<<<<< HEAD
+=======
+                                                        print(done + str(lookup[i]))
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
                                                         ws3.cell(
                                                             row=rowz, column=3
                                                         ).value = int(lookup[i]) + int(
@@ -1126,6 +1166,10 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
                                                         ):
                                                             i = i.replace(
                                                                 "#", "")
+<<<<<<< HEAD
+=======
+                                                            i = i.replace("#", "")
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
                                                             if int(i) < 31:
                                                                 print(200)
                                                                 ws3.cell(
@@ -1154,6 +1198,7 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
                                                                 )
                                                                 print(
                                                                     i + str(200))
+                                                                print(i + str(200))
                                                             elif (
                                                                 i == "Soldier"
                                                                 or i == "Captain"
@@ -1174,6 +1219,11 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
                                                                 print(
                                                                     i +
                                                                     str(lookup[i])
+<<<<<<< HEAD
+=======
+
+                                                                    i + str(lookup[i])
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
                                                                 )
                         people = "https://proton.api.atomicassets.io/atomicmarket/v1/assets?collection_name={}&owner={}&page={}&limit=100&order=desc&sort=asset_id".format(
                             collection_name, checker, pages
@@ -1236,42 +1286,74 @@ collection1 = "Panda Boy Multiverse"
 excelsheetname1 = "{}.xlsx".format(collection1)
 collection(author, collection_name, heading,
            userMonth, userYear, excelsheetname1)
+<<<<<<< HEAD
+=======
+collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
+collection_name = "521533225213"
+collection1 = "Panda Boy Multiverse"
+excelsheetname1 = "{}.xlsx".format(collection1)
+collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
 collection_name = "312124133135"
 collection1 = "Bomboy"
 time.sleep(6)
 excelsheetname1 = "{}.xlsx".format(collection1)
 collection(author, collection_name, heading,
            userMonth, userYear, excelsheetname1)
+<<<<<<< HEAD
+=======
+collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
 collection_name = "451243333513"
 collection1 = "Crypto Gorilla"
 time.sleep(6)
 excelsheetname1 = "{}.xlsx".format(collection1)
 collection(author, collection_name, heading,
            userMonth, userYear, excelsheetname1)
+<<<<<<< HEAD
+=======
+collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
 collection_name = "135115145544"
 collection1 = "Crypto Panda"
 time.sleep(6)
 excelsheetname1 = "{}.xlsx".format(collection1)
 collection(author, collection_name, heading,
            userMonth, userYear, excelsheetname1)
+<<<<<<< HEAD
+=======
+collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
 collection_name = "132423131521"
 collection1 = "Crypto Kevin"
 time.sleep(4)
 excelsheetname1 = "{}.xlsx".format(collection1)
 collection(author, collection_name, heading,
            userMonth, userYear, excelsheetname1)
+<<<<<<< HEAD
+=======
+collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
 collection_name = "534133213533"
 collection1 = "Crypto Steve "
 excelsheetname1 = "{}.xlsx".format(collection1)
 time.sleep(10)
 collection(author, collection_name, heading,
            userMonth, userYear, excelsheetname1)
+<<<<<<< HEAD
+=======
+collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
 collection_name = "234141453513"
 collection1 = "Crypto owls "
 excelsheetname1 = "{}.xlsx".format(collection1)
 time.sleep(10)
 collection(author, collection_name, heading,
            userMonth, userYear, excelsheetname1)
+<<<<<<< HEAD
+=======
+collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
 
 buys_df = pd.DataFrame(
     data=totalBuyslist,

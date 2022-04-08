@@ -11,6 +11,10 @@ from openpyxl.utils.dataframe import dataframe_to_rows
 from datetime import datetime
 
 user = "kevcollector"
+<<<<<<< HEAD
+=======
+user = "goattude"
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
 buyPrice = 0
 sellPrice = 0
 profit = 0
@@ -95,6 +99,10 @@ while len(flippers_buy["data"]) != 0:
         author_n = data_info["assets"][0]["collection"]["author"]
         local_time = datetime.utcfromtimestamp(
             timeb).strftime("%d-%m-%Y %H:%M:%S")
+<<<<<<< HEAD
+=======
+        local_time = datetime.utcfromtimestamp(timeb).strftime("%d-%m-%Y %H:%M:%S")
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
         assitID1 = data_info["assets"][0]["asset_id"]
 
         if sellers != user and assitID1 != assitID2:
@@ -133,6 +141,11 @@ buy = pd.DataFrame(
     columns=[
         "# of nft",
         "name of nft",
+<<<<<<< HEAD
+=======
+        "name of nft",
+        "# of nft",
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
         "collection",
         "author",
         "bought from",
@@ -186,6 +199,10 @@ while len(flippers_sell["data"]) != 0:
         author_n = data_info["assets"][0]["collection"]["author"]
         local_time = datetime.utcfromtimestamp(
             timet).strftime("%d-%m-%Y %H:%M:%S")
+<<<<<<< HEAD
+=======
+        local_time = datetime.utcfromtimestamp(timet).strftime("%d-%m-%Y %H:%M:%S")
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
         assitID1 = data_info["assets"][0]["asset_id"]
         if assitID1 == assitID2:
             print(buyPrice)
@@ -228,7 +245,6 @@ while len(auctions_["data"]) != 0:
         if Type == "XUSDC":
             number = data_info["price"]["amount"]
             fixedC = int(number) / 1000000
-
         if Type == "LOAN":
             number = data_info["price"]["amount"]
             fixedL = int(number) / 10000
@@ -278,7 +294,53 @@ while len(flippersSellOffers["data"]) != 0:
         if Type == "XPR":
             number = data_info["price"]["amount"]
             fixedX = int(number) / 10000
+        if Type == "LOAN":
+            number = data_info["price"]["amount"]
+            fixedL = int(number) / 10000
+        if Type == "FOOBAR":
+            number = data_info["listing_price"]
+            fixedF = int(number) / 10000
+            fixedF -= RoR * fixedF
+        name = data_info["assets"][0]["name"]
+        timez = data_info["assets"][0]["transferred_at_time"]
+        timeMs = data_info["created_at_time"]
+        timeSec = int(timeMs) / 1000
+        number_of_nft = int(data_info["assets"][0]["template_mint"])
+        buyer = data_info["buyer"]
+        seller = data_info["seller"]
+        local_time = datetime.utcfromtimestamp(timeSec).strftime("%m-%d-%Y %H:%M:%S")
 
+        flippers_List_buy.append(
+            [
+                seller,
+                fixedX,
+                fixedC,
+                fixedL,
+                fixedF,
+                buyer,
+                number_of_nft,
+                name,
+                local_time,
+            ]
+        )
+
+    auctions = (
+        "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&seller={}"
+        "&before={}&page=1&limit=100&order=desc&sort=created".format(user, timeMs)
+    )
+    auctions = requests.get(auctions).text
+    auctions_ = json.loads(auctions)
+
+print(flippersSellOffers)
+while len(flippersSellOffers["data"]) != 0:
+    for data_info in flippersSellOffers["data"]:
+        fixedC = 0
+        fixedX = 0
+        fixedL = 0
+        Type = data_info["price"]["token_symbol"]
+        if Type == "XPR":
+            number = data_info["price"]["amount"]
+            fixedX = int(number) / 10000
         if Type == "XUSDC":
             number = data_info["price"]["amount"]
             fixedC = int(number) / 1000000
@@ -299,7 +361,11 @@ while len(flippersSellOffers["data"]) != 0:
         seller = data_info["seller"]
         local_time = datetime.utcfromtimestamp(
             timeSec).strftime("%m-%d-%Y %H:%M:%S")
+<<<<<<< HEAD
 
+=======
+        local_time = datetime.utcfromtimestamp(timeSec).strftime("%m-%d-%Y %H:%M:%S")
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
         flippers_List_sell.append(
             [
                 name,
@@ -362,6 +428,22 @@ while len(flippersBuyOffers["data"]) != 0:
                 fixedX,
                 fixedL,
                 fixedF,
+<<<<<<< HEAD
+=======
+        local_time = datetime.utcfromtimestamp(timeSec).strftime("%m-%d-%Y %H:%M:%S")
+
+        flippers_List_buy.append(
+            [
+                seller,
+                fixedX,
+                fixedC,
+                fixedL,
+                fixedF,
+                buyer,
+                number_of_nft,
+                name,
+                local_time,
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
             ]
         )
 
@@ -406,6 +488,18 @@ mxbuys = mergedDf["bought for Xpr"].sum()
 mlbuys = mergedDf["bought for loan"].sum()
 mfbuys = mergedDf["bought for foobar"].sum()
 msells = mergedDf["sold to"].sum()
+<<<<<<< HEAD
+=======
+# sold = sells['sold for'].sum()
+mergedDf = pd.merge(buy, sells, how="inner", on="name of nft", suffixes=("", "_drop"))
+mergedDf.drop([col for col in mergedDf.columns if "drop" in col], axis=1, inplace=True)
+# TODO more of these with the other coins
+mergedDf["profits"] = mergedDf["sold for"] - mergedDf["bought for usdc"]
+profits = mergedDf["profits"].sum()
+mbuys = mergedDf["bought for usdc"].sum()
+mxbuys = mergedDf["bought for Xpr"].sum()
+msells = mergedDf["sold for"].sum()
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
 wb = Workbook()
 # name_df.add(names_df)
 # name_df=pd.merge([name_df, names_df])
@@ -429,6 +523,10 @@ ws.cell(row=maxrow, column=6, value=paidc)  # TODO add in more here
 ws.cell(row=maxrow, column=7, value=paidx)
 ws.cell(row=maxrow, column=8, value=paidl)
 ws.cell(row=maxrow, column=9, value=paidf)
+<<<<<<< HEAD
+=======
+ws.cell(row=maxrow, column=6, value=paid)  # TODO add in more here
+>>>>>>> e6f5cc65039de6ef8d5699c6b0e23b41bf73d96f
 ws.cell(row=maxrow, column=1, value="totals")
 ws2.title = "{} Sells".format(user)
 for r in dataframe_to_rows(sells, index=False):
