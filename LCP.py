@@ -1,7 +1,7 @@
-from ast import Pass
 import json
 import os
 from wsgiref.simple_server import WSGIServer
+import numpy as np
 import pandas as pd
 import requests as requests
 import pathlib
@@ -11,7 +11,7 @@ from datetime import datetime
 import time
 
 print(
-    "Thank you for running the program\nIt will take a few seconds to create everything\nHope you enjoy  \n-kevcollector"
+    "Thank you for running the programe\nIt will take a few seconds to create everything\nHope you enjoy  \n-kevcollector"
 )
 # set what command you want to run here
 # os.getenv('PWD')
@@ -71,9 +71,10 @@ def collection(author, collection_name, heading, *excelsheetname):
         )
         holders = requests.get(holders).text
         holders_ = json.loads(holders)
-        amount = 0
+        amount = 1
         rowz = 0
-        wolfCount = 0
+
+        gorillaCount = 0
         while len(holders_["data"]) != 0:
             pages = pages + 1
             amount = amount + 1
@@ -89,93 +90,57 @@ def collection(author, collection_name, heading, *excelsheetname):
                     resset = test.headers["X-RateLimit-Remaining"]
                     resset = int(resset)
                     next = int(next)
-                    wait = next - time.time()
-                    if resset < 3:
-                        time.sleep(wait)
-                    people_ = json.loads((test.text))
+                    timed = time.time()
+                    wait = next - timed
+                    if resset < 2:
+                        if wait < 0:
+                            time.sleep(10)
+                            people_ = json.loads((test.text))
+                        else:
+                            print(str(wait) + "=" + str(next) + "-" + str(timed))
+                            time.sleep(wait)
+                            people_ = json.loads((test.text))
+                    else:
+                        people_ = json.loads((test.text))
                     count = 0
-                    wolfPoints = 0
-                    rowz = rowz + 1
                     pages = 1
+                    rowz = rowz + 1
                     assitID2 = " "
-
                     while len(people_["data"]) != 0:
                         pages = pages + 1
                         if pages >= 3:
                             count = pages * 100
-
                         for data_info in people_["data"]:
+                            word = data_info["data"]["desc"]
                             nft_name = data_info["data"]["name"]
+                            number_of_nft = data_info["template_mint"]
                             assitID1 = data_info["asset_id"]
                             if assitID1 != assitID2:
                                 assitID2 = assitID1
                                 done = nft_name
-
-                                # if "524211545444" in collection_name:
-                                # insert lookup table here
-
-                                # if "3drfwzczslri" in collection_name:
-
-                                if "Proton Wolf Clan 2" in nft_name:
+                                if not "GGIP Proton Gorilla" in nft_name:
                                     count = count + 1
 
-                                    if "Special" in nft_name:
-                                        ws1.cell(
-                                            row=rowz, column=3).value = wolfPoints+0
-                                    if "COMMON" in nft_name:
-                                        ws1.cell(
-                                            row=rowz, column=3).value = wolfPoints+2
-                                    if "RARE" in nft_name:
-                                        ws1.cell(
-                                            row=rowz, column=3).value = wolfPoints+5
-                                    if "EPIC" in nft_name:
-                                        ws1.cell(
-                                            row=rowz, column=3).value = wolfPoints+7
-                                    if "HEROIC" in nft_name:
-                                        ws1.cell(
-                                            row=rowz, column=3).value = wolfPoints+9
-                                    if "ULTRA RARE" in nft_name:
-                                        ws1.cell(
-                                            row=rowz, column=3).value = wolfPoints+10
-                                    if "ULTRA EPIC" in nft_name:
-                                        ws1.cell(
-                                            row=rowz, column=3).value = wolfPoints+14
-                                    if "LEGENDARY" in nft_name:
-                                        ws1.cell(
-                                            row=rowz, column=3).value = wolfPoints+15
-                                    ws1.cell(row=rowz, column=2 +
-                                             count).value = (done)
-                                elif "FUSION" in nft_name:
-                                    if "ULTRA RARE" in nft_name:
-                                        ws1.cell(
-                                            row=rowz, column=3).value = wolfPoints+10
-                                    if "ULTRA EPIC" in nft_name:
-                                        ws1.cell(
-                                            row=rowz, column=3).value = wolfPoints+14
-                                else:
-                                    print(nft_name)
-                                    pass
-
+                                    ws1.cell(row=rowz, column=2 + count).value = (
+                                        done + " (#" + number_of_nft + ")"
+                                    )
                                 if count > 0:
                                     ws1.cell(
-                                        row=1, column=3 + count
+                                        row=1, column=2 + count
                                     ).value = "NFT " + str(count)
                                     ws1.cell(row=1, column=1).value = "Account"
                                     ws1.cell(row=1, column=2).value = "Amount"
-                                    ws1.cell(row=1, column=3).value = "Points"
-                                    ws1.cell(
-                                        row=rowz, column=1).value = checker
+                                    ws1.cell(row=rowz, column=1).value = checker
                                     ws1.cell(row=rowz, column=2).value = count
 
                                 else:
-                                    wolfCount += 1
+                                    gorillaCount += 1
                                     if count > 0:
                                         totalnftnumber = ws1.cell(
                                             row=rowz, column=2
                                         ).value
                                         if totalnftnumber != 0:
-                                            totalnftnumber = int(
-                                                totalnftnumber) - 1
+                                            totalnftnumber = int(totalnftnumber) - 1
                                             ws1.cell(row=rowz, column=2).value = int(
                                                 totalnftnumber
                                             )
@@ -188,15 +153,19 @@ def collection(author, collection_name, heading, *excelsheetname):
                         resset = test.headers["X-RateLimit-Remaining"]
                         resset = int(resset)
                         next = int(next)
-                        wait = next - time.time()
-                        if resset < 3:
-                            time.sleep(wait)
+                        timed = time.time()
+                        wait = next - timed
+                        if resset < 2:
+                            if wait < 0:
+                                time.sleep(1)
+                            else:
+                                print(str(wait) + "=" + str(next) + "-" + str(timed))
+                                time.sleep(wait)
                         people_ = json.loads((test.text))
 
                     holders_amount = ws1.cell(row=rowz, column=2).value
-
-                    totalholderslist.append(
-                        [checker, holders_amount, wolfPoints])
+                    if holders_amount != 0:
+                        totalholderslist.append([checker, holders_amount])
 
             holders = (
                 "https://proton.api.atomicassets.io/atomicassets/v1/accounts?collection_name={}"
@@ -227,28 +196,44 @@ def collection(author, collection_name, heading, *excelsheetname):
     normalServic(author, holders, *excelsheetname)
 
 
-author = "redbrush"
-universe = "Proton Wolf Clan"
+author = "ggip"
+universe = "GGIP + PLC"
 heading = "{} Collection".format(universe)
-collection_name = "524211545444"
-collection1 = "PWC Gen I"
+collection_name = "kxlulfrvzsdd"
+collection1 = "GGIP"
 excelsheetname1 = "{}.xlsx".format(collection1)
-time.sleep(6)
 collection(author, collection_name, heading, excelsheetname1)
-collection_name = "3drfwzczslri"
-collection2 = "PWC Gen II"
+collection_name = "241115151314"
+collection2 = "PLC"
 excelsheetname1 = "{}.xlsx".format(collection2)
-time.sleep(6)
+time.sleep(10)
 collection(author, collection_name, heading, excelsheetname1)
 wb2 = Workbook()
 ws1 = wb2.active
 ws1 = wb2.create_sheet("holders")
-holders_df = pd.DataFrame(data=totalholderslist, columns=[
-                          "account", "amount held", "points"])
+holders_df = pd.DataFrame(data=totalholderslist, columns=["account", "amount held"])
 
 print(totalholderslist)
+holders_df = holders_df.groupby(["account"]).agg(
+    {"account": "min", "amount held": "sum"}
+)
+holders_df = holders_df[~(holders_df == 0).any(axis=1)]
 
 holders_df = holders_df.sort_values(by=["amount held"], ascending=False)
+path = pathlib.Path().cwd() / ("{}".format(heading))
 
-
+os.chdir(path)
+edit = pd.read_excel("PLC.xlsx", 0, index_col=False)
+edit["Account"].replace(" ", np.nan, inplace=True)
+edit.dropna(subset=["Account"], inplace=True)
+edit.sort_values(by=["Amount"], ascending=False, inplace=True)
+os.remove("PLC.xlsx")
+wb3 = Workbook()
+ws = wb3.active
+ws.title = "Holders"
+writeToExcel(ws, edit)
+wb3.save("PLC.xlsx")
+wb3.close
 writeToExcel(ws1, holders_df)
+wb2.save("totalholderslist.xlsx")
+wb2.close()

@@ -4,6 +4,7 @@ import pandas as pd
 import requests as requests
 import pathlib
 from openpyxl import Workbook
+import openpyxl
 from openpyxl.utils.dataframe import dataframe_to_rows
 from datetime import datetime
 import time
@@ -25,7 +26,7 @@ def writeToExcel(worksheet, data):
                 dims[cell.column_letter] = max(
                     (dims.get(cell.column_letter, 0), len(str(cell.value))))
     for col, value in dims.items():
-        worksheet.column_dimensions[col].width = value
+        worksheet.column_dimensions[col].width = value+20
 
 
 current = pathlib.Path().cwd()
@@ -208,6 +209,8 @@ def collection(auther, collection_name, heading, *excelsheetname):
                                columns=["author ", "price listed usd", "price listed xpr", "price listed loan", "buyer", "# of nft", "name", "time"])
         total = name_df['price listed usd'].sum()
         name_df.at['Total', 'price listed usd'] = name_df['price listed usd'].sum()
+        xprtotal = name_df['price listed xpr'].sum()
+        loantotal = name_df['price listed loan'].sum()
 
         wb = Workbook()
 
@@ -227,6 +230,8 @@ def collection(auther, collection_name, heading, *excelsheetname):
             ws.column_dimensions[col].width = value
         maxrow = ws.max_row
         ws.cell(row=maxrow, column=1, value="totals")
+        ws.cell(row=maxrow, column=3).value = xprtotal
+        ws.cell(row=maxrow, column=4).value = loantotal
 
         resales = ("https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=1%2C3&seller_blacklist"
                    "={}&buyer_blacklist={}&collection_name={}&page=1&limit=100&order"
@@ -442,12 +447,10 @@ def collection(auther, collection_name, heading, *excelsheetname):
                     checker = (data_info['account'])
                     if rowz != 1:
                         temp2 = ws3.cell(row=rowz, column=3).value
-                    print("value = " + str(temp2))
                     print("getting {}'s data".format(checker))
                     totalz = 0
                     people = "https://proton.api.atomicassets.io/atomicmarket/v1/assets?collection_name={}&owner={}&page=1&limit=100&order=desc&sort=asset_id".format(
                         collection_name, checker)
-                    print(people)
                     test = requests.get(people)
                     next = test.headers['X-RateLimit-Reset']
                     resset = test.headers['X-RateLimit-Remaining']
@@ -479,7 +482,6 @@ def collection(auther, collection_name, heading, *excelsheetname):
                             assitID1 = data_info["asset_id"]
                             if assitID1 != assitID2:
                                 assitID2 = assitID1
-                                print(ws3.cell(row=rowz, column=3).value)
                                 count = count + 1
                                 ws3.cell(
                                     row=1, column=3).value = "crystals per week"
@@ -496,36 +498,34 @@ def collection(auther, collection_name, heading, *excelsheetname):
                                 lord = ws3.cell(row=rowz, column=7).value
                                 ws3.cell(
                                     row=rowz, column=7 + count).value = nft_name + ' (#' + number_of_nft + ')'
+                                ws3.cell(row=1, column=7 +
+                                         count).value = "nft "+str(count)
                                 nft_name = nft_name.lower()
-                                if "token" in nft_name:
-                                    print(nft_name+" passed as its a token")
-                                    pass
-                                if "mysterious crystal" in nft_name:
-                                    word = nft_name
-                                    start = word.find('(')
-                                    start += 1
-                                    end = word.find(')')
-                                    new = int(word[start:end])
-                                    ws3.cell(
-                                        row=rowz, column=4).value = crystal+new
+                                if not "token" in nft_name:
+                                    if "mysterious crystal" in nft_name:
+                                        word = nft_name
+                                        start = word.find('(')
+                                        start += 1
+                                        end = word.find(')')
+                                        new = int(word[start:end])
+                                        ws3.cell(
+                                            row=rowz, column=4).value = crystal+new
 
-                                if "miner" in nft_name:
-                                    ws3.cell(
-                                        row=rowz, column=3).value = points+5
-                                    ws3.cell(
-                                        row=rowz, column=5).value = miner+1
-                                if "wizard" in nft_name:
-                                    ws3.cell(
-                                        row=rowz, column=3).value = points+10
-                                    ws3.cell(
-                                        row=rowz, column=6).value = wizard + 1
-                                if "lord" in nft_name:
-                                    ws3.cell(
-                                        row=rowz, column=3).value = points+20
-                                    ws3.cell(
-                                        row=rowz, column=7).value = lord + 1
-                                else:
-                                    print(nft_name)
+                                    if "miner" in nft_name:
+                                        ws3.cell(
+                                            row=rowz, column=3).value = points+5
+                                        ws3.cell(
+                                            row=rowz, column=5).value = miner+1
+                                    if "wizard" in nft_name:
+                                        ws3.cell(
+                                            row=rowz, column=3).value = points+10
+                                        ws3.cell(
+                                            row=rowz, column=6).value = wizard + 1
+                                    if "lord" in nft_name:
+                                        ws3.cell(
+                                            row=rowz, column=3).value = points+20
+                                        ws3.cell(
+                                            row=rowz, column=7).value = lord + 1
                         people = "https://proton.api.atomicassets.io/atomicmarket/v1/assets?collection_name={}&owner={}&page={}&limit=100&order=desc&sort=asset_id".format(
                             collection_name, checker, pages)
                         test = requests.get(people)
@@ -559,10 +559,35 @@ def collection(auther, collection_name, heading, *excelsheetname):
         wb.save(excelsave)
         print("Creating the excel file")
         wb.close()
-        edit = pd.read_excel(excelsave)
-        print(edit)
-        edit.sort_values(by=['crystals per week'])
-        print(edit)
+        edit = pd.read_excel(excelsave, 2, index_col=False)
+        holdersTab = edit
+        holdersTab = holdersTab.loc[:, ~
+                                    holdersTab.columns.str.contains('crystals per week')]
+        holdersTab = holdersTab.loc[:, ~
+                                    holdersTab.columns.str.contains('crystals')]
+        holdersTab = holdersTab.loc[:, ~
+                                    holdersTab.columns.str.contains('miner')]
+        holdersTab = holdersTab.loc[:, ~
+                                    holdersTab.columns.str.contains('wizard')]
+        holdersTab = holdersTab.loc[:, ~
+                                    holdersTab.columns.str.contains('lord')]
+        crystalsTab = edit
+        crystalsTab.sort_values(by=['crystals per week'],
+                                ascending=False, inplace=True)
+        crystalsTab = crystalsTab.loc[:, ~
+                                      crystalsTab.columns.str.contains('^nft')]
+        crystalsTab = crystalsTab.loc[:, ~
+                                      crystalsTab.columns.str.contains('amount held')]
+        wb3 = openpyxl.load_workbook(excelsave)
+        ws = wb3["Holders"]
+        wb3.remove(ws)
+        ws5 = wb3.create_sheet("Holders")
+        ws6 = wb3.create_sheet("Crystals")
+        writeToExcel(ws5, holdersTab)
+        writeToExcel(ws6, crystalsTab)
+        os.remove(excelsave)
+        wb3.save(excelsave)
+        wb3.close()
         os.chdir(path.parent.absolute())
 
     normalServic(authers, all, resales, FirstSale,
