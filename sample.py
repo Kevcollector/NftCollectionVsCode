@@ -86,7 +86,6 @@ while len(flippers_buy["data"]) != 0:
         sellers = data_info["seller"]
         name = data_info["assets"][0]["name"]
         timef = data_info["updated_at_time"]
-        timeU = data_info["created_at_time"]
         timeb = int(timef) / 1000
         number_of_nft = int(data_info["assets"][0]["template_mint"])
         RoR = float(data_info["assets"][0]["collection"]["market_fee"])
@@ -196,7 +195,6 @@ while len(flippers_buy_auction["data"]) != 0:
         fixedX = 0
         fixedL = 0
         fixedF = 0
-
         Type = data_info["price"]["token_symbol"]
         if Type == "XPR":
             number = data_info["price"]["amount"]
@@ -210,7 +208,7 @@ while len(flippers_buy_auction["data"]) != 0:
         if Type == "FOOBAR":
             number = data_info["listing_price"]
             fixedF = int(number) / 10000
-            fixedF -= RoR * fixedF
+
         name = data_info["assets"][0]["name"]
         timez = data_info["updated_at_time"]
         timeMs = data_info["created_at_time"]
@@ -256,17 +254,21 @@ while len(flippers_sell_auction["data"]) != 0:
         fixedX = 0
         fixedL = 0
         fixedF = 0
-
+        RoR = 0
+        RoR = float(data_info["assets"][0]["collection"]["market_fee"])
         Type = data_info["price"]["token_symbol"]
         if Type == "XPR":
             number = data_info["price"]["amount"]
             fixedX = int(number) / 10000
+            fixedX -= RoR * fixedX
         if Type == "XUSDC":
             number = data_info["price"]["amount"]
             fixedC = int(number) / 1000000
+            fixedC -= RoR * fixedC
         if Type == "LOAN":
             number = data_info["price"]["amount"]
             fixedL = int(number) / 10000
+            fixedL -= RoR * fixedL
         if Type == "FOOBAR":
             number = data_info["listing_price"]
             fixedF = int(number) / 10000
@@ -317,17 +319,21 @@ while len(flippersSellOffers["data"]) != 0:
         fixedX = 0
         fixedL = 0
         fixedF = 0
-
+        RoR = 0
+        RoR = float(data_info["assets"][0]["collection"]["market_fee"])
         Type = data_info["price"]["token_symbol"]
         if Type == "XPR":
             number = data_info["price"]["amount"]
             fixedX = int(number) / 10000
+            fixedX -= RoR * fixedX
         if Type == "XUSDC":
             number = data_info["price"]["amount"]
             fixedC = int(number) / 1000000
+            fixedC -= RoR * fixedC
         if Type == "LOAN":
             number = data_info["price"]["amount"]
             fixedL = int(number) / 10000
+            fixedL -= RoR * fixedL
         if Type == "FOOBAR":
             number = data_info["listing_price"]
             fixedF = int(number) / 10000
@@ -473,7 +479,6 @@ paidc = sells["sold for xusd"].sum()
 paidx = sells["sold for xpr"].sum()
 paidl = sells["sold for loan"].sum()
 paidf = sells["sold for foobar"].sum()  # TODO sum the other coins the same way
-sold = sells["sold to"].sum()
 buy.to_pickle("./dummy.pkl")
 sells.to_pickle("./dummy2.pkl")
 mergedDf = pd.merge(buy, sells, how="inner", on="name of nft", suffixes=("", "_drop"))
@@ -523,7 +528,7 @@ for row in ws2.rows:
 for col, value in dims.items():
     ws2.column_dimensions[col].width = value
 maxrow = ws2.max_row + 2
-ws2.cell(row=maxrow, column=6, value=sold)  # TODO add in more here
+ws2.cell(row=maxrow, column=6, value=paidc)  # TODO add in more here
 ws2.cell(row=maxrow, column=1, value="totals")
 ws3.title = "{} Flipping ".format(user)
 for r in dataframe_to_rows(mergedDf, index=False):
