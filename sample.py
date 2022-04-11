@@ -85,8 +85,7 @@ while len(flippers_buy["data"]) != 0:
         buyPrice = int(number) / 1000000
         sellers = data_info["seller"]
         name = data_info["assets"][0]["name"]
-        timef = data_info["assets"][0]["transferred_at_time"]
-        timeU = data_info["created_at_time"]
+        timef = data_info["updated_at_time"]
         timeb = int(timef) / 1000
         number_of_nft = int(data_info["assets"][0]["template_mint"])
         RoR = float(data_info["assets"][0]["collection"]["market_fee"])
@@ -215,6 +214,8 @@ while len(flippers_buy_auction["data"]) != 0:
         timeMs = data_info["created_at_time"]
         timeSec = int(timez) / 1000
         number_of_nft = int(data_info["assets"][0]["template_mint"])
+        Collection_n = data_info["assets"][0]["collection"]["name"]
+        author_n = data_info["assets"][0]["collection"]["author"]
         buyer = data_info["buyer"]
         seller = data_info["seller"]
         local_time = datetime.utcfromtimestamp(timeSec).strftime("%m-%d-%Y %H:%M:%S")
@@ -225,7 +226,7 @@ while len(flippers_buy_auction["data"]) != 0:
                 number_of_nft,
                 Collection_n,
                 author_n,
-                sellers,
+                seller,
                 fixedC,
                 fixedX,
                 fixedL,
@@ -277,6 +278,8 @@ while len(flippers_sell_auction["data"]) != 0:
         timeMs = data_info["created_at_time"]
         timeSec = int(timeMs) / 1000
         number_of_nft = int(data_info["assets"][0]["template_mint"])
+        Collection_n = data_info["assets"][0]["collection"]["name"]
+        author_n = data_info["assets"][0]["collection"]["author"]
         buyer = data_info["buyer"]
         seller = data_info["seller"]
         local_time = datetime.utcfromtimestamp(timeSec).strftime("%m-%d-%Y %H:%M:%S")
@@ -340,6 +343,8 @@ while len(flippersSellOffers["data"]) != 0:
         timeMs = data_info["created_at_time"]
         timeSec = int(timeMs) / 1000
         number_of_nft = int(data_info["assets"][0]["template_mint"])
+        Collection_n = data_info["assets"][0]["collection"]["name"]
+        author_n = data_info["assets"][0]["collection"]["author"]
         buyer = data_info["buyer"]
         seller = data_info["seller"]
         local_time = datetime.utcfromtimestamp(timeSec).strftime("%m-%d-%Y %H:%M:%S")
@@ -394,14 +399,14 @@ while len(flippersBuyOffers["data"]) != 0:
             fixedF = int(number) / 10000
 
         name = data_info["assets"][0]["name"]
-        timez = data_info["assets"][0]["transferred_at_time"]
+        timez = data_info["updated_at_time"]
         timeMs = data_info["created_at_time"]
-        timeSec = int(timeMs) / 1000
+        timeSec = int(timez) / 1000
         number_of_nft = int(data_info["assets"][0]["template_mint"])
         Collection_n = data_info["collection"]["name"]
         author_n = data_info["collection"]["author"]
         buyer = data_info["buyer"]
-        seller = data_info["seller"]
+        sellers = data_info["seller"]
         local_time = datetime.utcfromtimestamp(timeSec).strftime("%m-%d-%Y %H:%M:%S")
         flippers_List_buy.append(
             [
