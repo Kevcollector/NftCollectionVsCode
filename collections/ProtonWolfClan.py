@@ -71,9 +71,9 @@ def collection(author, collection_name, heading, *excelsheetname):
         )
         holders = requests.get(holders).text
         holders_ = json.loads(holders)
-        amount = 0
-        rowz = 0
-        wolfCount = 0
+        amount = 1
+        rowz = 1
+
         while len(holders_["data"]) != 0:
             pages = pages + 1
             amount = amount + 1
@@ -111,50 +111,61 @@ def collection(author, collection_name, heading, *excelsheetname):
                                 assitID2 = assitID1
                                 done = nft_name
 
-                                # if "524211545444" in collection_name:
+                                # if collection_name == "524211545444":
                                 # insert lookup table here
 
-                                # if "3drfwzczslri" in collection_name:
-
-                                if "Proton Wolf Clan 2" in nft_name:
+                                if collection_name == "3drfwzczslri":
                                     count = count + 1
 
-                                    if "Special" in nft_name:
-                                        ws1.cell(
-                                            row=rowz, column=3).value = wolfPoints+0
                                     if "COMMON" in nft_name:
                                         ws1.cell(
-                                            row=rowz, column=3).value = wolfPoints+2
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 2)
+
                                     if "RARE" in nft_name:
                                         ws1.cell(
-                                            row=rowz, column=3).value = wolfPoints+5
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 5)
+
                                     if "EPIC" in nft_name:
                                         ws1.cell(
-                                            row=rowz, column=3).value = wolfPoints+7
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 7)
+
                                     if "HEROIC" in nft_name:
                                         ws1.cell(
-                                            row=rowz, column=3).value = wolfPoints+9
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 9)
+
                                     if "ULTRA RARE" in nft_name:
                                         ws1.cell(
-                                            row=rowz, column=3).value = wolfPoints+10
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 10)
+
                                     if "ULTRA EPIC" in nft_name:
                                         ws1.cell(
-                                            row=rowz, column=3).value = wolfPoints+14
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 14)
+
                                     if "LEGENDARY" in nft_name:
                                         ws1.cell(
-                                            row=rowz, column=3).value = wolfPoints+15
-                                    ws1.cell(row=rowz, column=2 +
-                                             count).value = (done)
-                                elif "FUSION" in nft_name:
-                                    if "ULTRA RARE" in nft_name:
-                                        ws1.cell(
-                                            row=rowz, column=3).value = wolfPoints+10
-                                    if "ULTRA EPIC" in nft_name:
-                                        ws1.cell(
-                                            row=rowz, column=3).value = wolfPoints+14
-                                else:
-                                    print(nft_name)
-                                    pass
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 15)
+
+                                    if "FUSION" in nft_name:
+                                        if "ULTRA RARE" in nft_name:
+                                            ws1.cell(
+                                                row=rowz, column=3
+                                            ).value = wolfPoints = (wolfPoints + 10)
+
+                                        if "ULTRA EPIC" in nft_name:
+                                            ws1.cell(
+                                                row=rowz, column=3
+                                            ).value = wolfPoints = (wolfPoints + 14)
+                                    else:
+                                        ws1.cell(row=rowz, column=3).value = wolfPoints
+
+                                    ws1.cell(row=rowz, column=3 + count).value = done
 
                                 if count > 0:
                                     ws1.cell(
@@ -163,22 +174,8 @@ def collection(author, collection_name, heading, *excelsheetname):
                                     ws1.cell(row=1, column=1).value = "Account"
                                     ws1.cell(row=1, column=2).value = "Amount"
                                     ws1.cell(row=1, column=3).value = "Points"
-                                    ws1.cell(
-                                        row=rowz, column=1).value = checker
+                                    ws1.cell(row=rowz, column=1).value = checker
                                     ws1.cell(row=rowz, column=2).value = count
-
-                                else:
-                                    wolfCount += 1
-                                    if count > 0:
-                                        totalnftnumber = ws1.cell(
-                                            row=rowz, column=2
-                                        ).value
-                                        if totalnftnumber != 0:
-                                            totalnftnumber = int(
-                                                totalnftnumber) - 1
-                                            ws1.cell(row=rowz, column=2).value = int(
-                                                totalnftnumber
-                                            )
 
                         people = "https://proton.api.atomicassets.io/atomicmarket/v1/assets?collection_name={}&owner={}&page={}&limit=100&order=desc&sort=asset_id".format(
                             collection_name, checker, pages
@@ -195,8 +192,9 @@ def collection(author, collection_name, heading, *excelsheetname):
 
                     holders_amount = ws1.cell(row=rowz, column=2).value
 
-                    totalholderslist.append(
-                        [checker, holders_amount, wolfPoints])
+                    totalPoints = ws1.cell(row=rowz, column=3).value
+
+                    totalholderslist.append([checker, holders_amount, totalPoints])
 
             holders = (
                 "https://proton.api.atomicassets.io/atomicassets/v1/accounts?collection_name={}"
@@ -230,11 +228,11 @@ def collection(author, collection_name, heading, *excelsheetname):
 author = "redbrush"
 universe = "Proton Wolf Clan"
 heading = "{} Collection".format(universe)
-collection_name = "524211545444"
-collection1 = "PWC Gen I"
-excelsheetname1 = "{}.xlsx".format(collection1)
-time.sleep(6)
-collection(author, collection_name, heading, excelsheetname1)
+# collection_name = "524211545444"
+# collection1 = "PWC Gen I"
+# excelsheetname1 = "{}.xlsx".format(collection1)
+# time.sleep(6)
+# collection(author, collection_name, heading, excelsheetname1)
 collection_name = "3drfwzczslri"
 collection2 = "PWC Gen II"
 excelsheetname1 = "{}.xlsx".format(collection2)
@@ -243,12 +241,15 @@ collection(author, collection_name, heading, excelsheetname1)
 wb2 = Workbook()
 ws1 = wb2.active
 ws1 = wb2.create_sheet("holders")
-holders_df = pd.DataFrame(data=totalholderslist, columns=[
-                          "account", "amount held", "points"])
+holders_df = pd.DataFrame(
+    data=totalholderslist, columns=["account", "amount held", "points"]
+)
 
 print(totalholderslist)
 
-holders_df = holders_df.sort_values(by=["amount held"], ascending=False)
+holders_df = holders_df.sort_values(by=["points"], ascending=False)
 
 
 writeToExcel(ws1, holders_df)
+
+wb2.save("testfile.xlsx")
