@@ -40,16 +40,16 @@ flippersBuyOffers = "https://proton.api.atomicassets.io/atomicmarket/v1/buyoffer
     user
 )
 
-
+print()
 # TODO add in the other apis ( offers, acutions), add this into the flippers_List_buy and sells recpectivly -Y
 flippers_sell = requests.get(flippers_sell).text
 flippers_sell = json.loads(flippers_sell)
 flippers_buyt = requests.get(flippers_buys).text
 flippers_buy = json.loads(flippers_buyt)
-flippers_sell_auction = requests.get(flippers_sell_auction).text
-flippers_sell_auction = json.loads(flippers_sell_auction)
 flippers_buy_auction = requests.get(flippers_buy_auction).text
 flippers_buy_auction = json.loads(flippers_buy_auction)
+flippers_sell_auction = requests.get(flippers_sell_auction).text
+flippers_sell_auction = json.loads(flippers_sell_auction)
 flippersBuyOffers = requests.get(flippersBuyOffers).text
 flippersBuyOffers = json.loads(flippersBuyOffers)
 flippersSellOffers = requests.get(flippersSellOffers).text
@@ -75,19 +75,15 @@ while len(flippers_buy["data"]) != 0:
         if Type == "XPR":
             number = data_info["listing_price"]
             fixedX = int(number) / 10000
-
         if Type == "XUSDC":
             number = data_info["listing_price"]
             fixedC = int(number) / 1000000
-
         if Type == "LOAN":
             number = data_info["listing_price"]
             fixedL = int(number) / 10000
-
         if Type == "FOOBAR":
             number = data_info["listing_price"]
             fixedF = int(number) / 10000
-
         number = data_info["listing_price"]
         buyPrice = int(number) / 1000000
         sellers = data_info["seller"]
@@ -128,9 +124,7 @@ while len(flippers_buy["data"]) != 0:
         wait = waitUntilReset - time.time()
         time.sleep(wait)
     flippers_buy = json.loads(flippers_buyt.text)
-    print("getting buys")
-
-    # print(flippers_buy)
+    print("getting Buys")
 
 
 while len(flippers_sell["data"]) != 0:
@@ -145,17 +139,14 @@ while len(flippers_sell["data"]) != 0:
             number = data_info["listing_price"]
             fixedX = int(number) / 10000
             fixedX -= RoR * fixedX
-
         if Type == "XUSDC":
             number = data_info["listing_price"]
             fixedC = int(number) / 1000000
             fixedC -= RoR * fixedC
-
         if Type == "LOAN":
             number = data_info["listing_price"]
             fixedL = int(number) / 10000
             fixedL -= RoR * fixedL
-
         if Type == "FOOBAR":
             number = data_info["listing_price"]
             fixedF = int(number) / 10000
@@ -193,17 +184,16 @@ while len(flippers_sell["data"]) != 0:
         user, timef
     )
     flippers_sell = requests.get(flippers_sell).text
+    waitUntilReset = int(flippers_buyt.headers["X-RateLimit-Reset"])
+    remainderPings = int(flippers_buyt.headers["X-RateLimit-Remaining"])
+    if remainderPings < 3:
+        wait = waitUntilReset - time.time()
+        time.sleep(wait)
     flippers_sell = json.loads(flippers_sell)
     print("getting Resells")
 
-flippers_buy_auctions = "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&buyer={}&page=1&limit=100&order=desc&sort=created".format(
-    user
-)
-auctions = requests.get(flippers_buy_auctions).text
-auctions_ = json.loads(auctions)
-
-while len(auctions_["data"]) != 0:
-    for data_info in auctions_["data"]:
+while len(flippers_buy_auction["data"]) != 0:
+    for data_info in flippers_buy_auction["data"]:
         fixedC = 0
         fixedX = 0
         fixedL = 0
@@ -213,7 +203,6 @@ while len(auctions_["data"]) != 0:
         if Type == "XPR":
             number = data_info["price"]["amount"]
             fixedX = int(number) / 10000
-
         if Type == "XUSDC":
             number = data_info["price"]["amount"]
             fixedC = int(number) / 1000000
@@ -248,30 +237,30 @@ while len(auctions_["data"]) != 0:
             ]
         )
 
-    auctions = (
+    flippers_buy_auction = (
         "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&seller={}"
         "&before={}&page=1&limit=100&order=desc&sort=created".format(user, timeMs)
     )
-    auctions = requests.get(auctions).text
-    auctions_ = json.loads(auctions)
-    print("getting auctions")
-flippers_sells_auctions = "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&seller={}&page=1&limit=100&order=desc&sort=created".format(
-    user
-)
-auctions = requests.get(flippers_sells_auctions).text
-auctions_ = json.loads(auctions)
+    flippers_buy_auction = requests.get(flippers_buy_auction).text
+    waitUntilReset = int(flippers_buyt.headers["X-RateLimit-Reset"])
+    remainderPings = int(flippers_buyt.headers["X-RateLimit-Remaining"])
+    if remainderPings < 3:
+        wait = waitUntilReset - time.time()
+        time.sleep(wait)
+    flippers_buy_auction = json.loads(flippers_buy_auction)
+    print("getting buy auctions")
 
-while len(auctions_["data"]) != 0:
-    for data_info in auctions_["data"]:
+while len(flippers_sell_auction["data"]) != 0:
+    for data_info in flippers_sell_auction["data"]:
         fixedC = 0
         fixedX = 0
         fixedL = 0
         fixedF = 0
+
         Type = data_info["price"]["token_symbol"]
         if Type == "XPR":
             number = data_info["price"]["amount"]
             fixedX = int(number) / 10000
-
         if Type == "XUSDC":
             number = data_info["price"]["amount"]
             fixedC = int(number) / 1000000
@@ -306,13 +295,18 @@ while len(auctions_["data"]) != 0:
             ]
         )
 
-    auctions = (
+    flippers_sell_auction = (
         "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&seller={}"
         "&before={}&page=1&limit=100&order=desc&sort=created".format(user, timeMs)
     )
-    auctions = requests.get(auctions).text
-    auctions_ = json.loads(auctions)
-    print("getting auctions")
+    flippers_sell_auction = requests.get(flippers_sell_auction).text
+    waitUntilReset = int(flippers_buyt.headers["X-RateLimit-Reset"])
+    remainderPings = int(flippers_buyt.headers["X-RateLimit-Remaining"])
+    if remainderPings < 3:
+        wait = waitUntilReset - time.time()
+        time.sleep(wait)
+    flippers_sell_auction = json.loads(flippers_sell_auction)
+    print("getting sell auctions")
 
 while len(flippersSellOffers["data"]) != 0:
     for data_info in flippersSellOffers["data"]:
@@ -325,6 +319,9 @@ while len(flippersSellOffers["data"]) != 0:
         if Type == "XPR":
             number = data_info["price"]["amount"]
             fixedX = int(number) / 10000
+        if Type == "XUSDC":
+            number = data_info["price"]["amount"]
+            fixedC = int(number) / 1000000
         if Type == "LOAN":
             number = data_info["price"]["amount"]
             fixedL = int(number) / 10000
@@ -360,8 +357,13 @@ while len(flippersSellOffers["data"]) != 0:
         user, timeMs
     )
     flippersSellOffers = requests.get(flippersSellOffers).text
+    waitUntilReset = int(flippers_buyt.headers["X-RateLimit-Reset"])
+    remainderPings = int(flippers_buyt.headers["X-RateLimit-Remaining"])
+    if remainderPings < 3:
+        wait = waitUntilReset - time.time()
+        time.sleep(wait)
     flippersSellOffers = json.loads(flippersSellOffers)
-    print("getting offers " + str(timeMs))
+    print("getting sell offers " + str(timeMs))
 
 
 while len(flippersBuyOffers["data"]) != 0:
@@ -375,11 +377,9 @@ while len(flippersBuyOffers["data"]) != 0:
         if Type == "XPR":
             number = data_info["price"]["amount"]
             fixedX = int(number) / 10000
-
         if Type == "XUSDC":
             number = data_info["price"]["amount"]
             fixedC = int(number) / 1000000
-
         if Type == "LOAN":
             number = data_info["price"]["amount"]
             fixedL = int(number) / 10000
@@ -414,8 +414,14 @@ while len(flippersBuyOffers["data"]) != 0:
         user, timeMs
     )
     flippersBuyOffers = requests.get(flippersBuyOffers).text
+    waitUntilReset = int(flippers_buyt.headers["X-RateLimit-Reset"])
+    remainderPings = int(flippers_buyt.headers["X-RateLimit-Remaining"])
+    if remainderPings < 3:
+        wait = waitUntilReset - time.time()
+        time.sleep(wait)
     flippersBuyOffers = json.loads(flippersBuyOffers)
     print("getting buy offers")
+
 buy = pd.DataFrame(
     data=flippers_List_buy,
     columns=[
@@ -492,10 +498,10 @@ for row in ws.rows:
 for col, value in dims.items():
     ws.column_dimensions[col].width = value
 maxrow = ws.max_row + 2
-ws.cell(row=maxrow, column=6, value=paidc)  # TODO add in more here
-ws.cell(row=maxrow, column=7, value=paidx)
-ws.cell(row=maxrow, column=8, value=paidl)
-ws.cell(row=maxrow, column=9, value=paidf)  # TODO add in more here
+ws.cell(row=maxrow, column=6, value=paidusd)  # TODO add in more here
+# ws.cell(row=maxrow, column=7, value=paidx)
+# ws.cell(row=maxrow, column=8, value=paidl)
+# ws.cell(row=maxrow, column=9, value=paidf)
 ws.cell(row=maxrow, column=1, value="totals")
 ws2.title = "{} Sells".format(user)
 for r in dataframe_to_rows(sells, index=False):
