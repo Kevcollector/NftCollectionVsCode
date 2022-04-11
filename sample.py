@@ -196,124 +196,6 @@ while len(flippers_sell["data"]) != 0:
     flippers_sell = json.loads(flippers_sell)
     print("getting Resells")
 
-flippers_buy_auctions = "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&buyer={}&page=1&limit=100&order=desc&sort=created".format(
-    user
-)
-auctions = requests.get(flippers_buy_auctions).text
-auctions_ = json.loads(auctions)
-
-while len(auctions_["data"]) != 0:
-    for data_info in auctions_["data"]:
-        fixedC = 0
-        fixedX = 0
-        fixedL = 0
-        fixedF = 0
-
-        Type = data_info["price"]["token_symbol"]
-        if Type == "XPR":
-            number = data_info["price"]["amount"]
-            fixedX = int(number) / 10000
-
-        if Type == "XUSDC":
-            number = data_info["price"]["amount"]
-            fixedC = int(number) / 1000000
-        if Type == "LOAN":
-            number = data_info["price"]["amount"]
-            fixedL = int(number) / 10000
-        if Type == "FOOBAR":
-            number = data_info["listing_price"]
-            fixedF = int(number) / 10000
-            fixedF -= RoR * fixedF
-        name = data_info["assets"][0]["name"]
-        timez = data_info["assets"][0]["transferred_at_time"]
-        timeMs = data_info["created_at_time"]
-        timeSec = int(timeMs) / 1000
-        number_of_nft = int(data_info["assets"][0]["template_mint"])
-        buyer = data_info["buyer"]
-        seller = data_info["seller"]
-        local_time = datetime.utcfromtimestamp(timeSec).strftime("%m-%d-%Y %H:%M:%S")
-
-        flippers_List_buy.append(
-            [
-                name,
-                number_of_nft,
-                Collection_n,
-                author_n,
-                sellers,
-                fixedC,
-                fixedX,
-                fixedL,
-                fixedF,
-                local_time,
-            ]
-        )
-
-    auctions = (
-        "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&seller={}"
-        "&before={}&page=1&limit=100&order=desc&sort=created".format(user, timeMs)
-    )
-    auctions = requests.get(auctions).text
-    auctions_ = json.loads(auctions)
-    print("getting auctions")
-flippers_sells_auctions = "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&seller={}&page=1&limit=100&order=desc&sort=created".format(
-    user
-)
-auctions = requests.get(flippers_sells_auctions).text
-auctions_ = json.loads(auctions)
-
-while len(auctions_["data"]) != 0:
-    for data_info in auctions_["data"]:
-        fixedC = 0
-        fixedX = 0
-        fixedL = 0
-        fixedF = 0
-        Type = data_info["price"]["token_symbol"]
-        if Type == "XPR":
-            number = data_info["price"]["amount"]
-            fixedX = int(number) / 10000
-
-        if Type == "XUSDC":
-            number = data_info["price"]["amount"]
-            fixedC = int(number) / 1000000
-        if Type == "LOAN":
-            number = data_info["price"]["amount"]
-            fixedL = int(number) / 10000
-        if Type == "FOOBAR":
-            number = data_info["listing_price"]
-            fixedF = int(number) / 10000
-            fixedF -= RoR * fixedF
-        name = data_info["assets"][0]["name"]
-        timez = data_info["assets"][0]["transferred_at_time"]
-        timeMs = data_info["created_at_time"]
-        timeSec = int(timeMs) / 1000
-        number_of_nft = int(data_info["assets"][0]["template_mint"])
-        buyer = data_info["buyer"]
-        seller = data_info["seller"]
-        local_time = datetime.utcfromtimestamp(timeSec).strftime("%m-%d-%Y %H:%M:%S")
-
-        flippers_List_sell.append(
-            [
-                name,
-                number_of_nft,
-                Collection_n,
-                author_n,
-                buyers,
-                fixedC,
-                fixedX,
-                fixedL,
-                fixedF,
-                local_time,
-            ]
-        )
-
-    auctions = (
-        "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&seller={}"
-        "&before={}&page=1&limit=100&order=desc&sort=created".format(user, timeMs)
-    )
-    auctions = requests.get(auctions).text
-    auctions_ = json.loads(auctions)
-    print("getting auctions")
-
 while len(flippersSellOffers["data"]) != 0:
     for data_info in flippersSellOffers["data"]:
         fixedC = 0
@@ -392,6 +274,8 @@ while len(flippersBuyOffers["data"]) != 0:
         timeMs = data_info["created_at_time"]
         timeSec = int(timeMs) / 1000
         number_of_nft = int(data_info["assets"][0]["template_mint"])
+        Collection_n = data_info["collection"]["name"]
+        author_n = data_info["collection"]["author"]
         buyer = data_info["buyer"]
         seller = data_info["seller"]
         local_time = datetime.utcfromtimestamp(timeSec).strftime("%m-%d-%Y %H:%M:%S")
@@ -492,7 +376,7 @@ for row in ws.rows:
 for col, value in dims.items():
     ws.column_dimensions[col].width = value
 maxrow = ws.max_row + 2
-ws.cell(row=maxrow, column=6, value=paidc)  # TODO add in more here
+ws.cell(row=maxrow, column=6, value=paidusd)  # TODO add in more here
 ws.cell(row=maxrow, column=7, value=paidx)
 ws.cell(row=maxrow, column=8, value=paidl)
 ws.cell(row=maxrow, column=9, value=paidf)  # TODO add in more here
