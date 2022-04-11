@@ -11,8 +11,6 @@ from openpyxl.utils.dataframe import dataframe_to_rows
 from datetime import datetime
 
 user = "kevcollector"
-user = "goattude"
-user = "jeffwallet"
 
 buyPrice = 0
 sellPrice = 0
@@ -26,7 +24,11 @@ flippers_buys = "https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=
     user
 )
 
-flippers_auction = "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&seller={}&page=1&limit=100&order=desc&sort=created".format(
+flippers_buy_auction = "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&buyer={}&page=1&limit=100&order=desc&sort=created".format(
+    user
+)
+
+flippers_sell_auction = "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&seller={}&page=1&limit=100&order=desc&sort=created".format(
     user
 )
 
@@ -44,8 +46,10 @@ flippers_sell = requests.get(flippers_sell).text
 flippers_sell = json.loads(flippers_sell)
 flippers_buyt = requests.get(flippers_buys).text
 flippers_buy = json.loads(flippers_buyt)
-flippers_auction = requests.get(flippers_auction).text
-flippers_auction = json.loads(flippers_auction)
+flippers_sell_auction = requests.get(flippers_sell_auction).text
+flippers_sell_auction = json.loads(flippers_sell_auction)
+flippers_buy_auction = requests.get(flippers_buy_auction).text
+flippers_buy_auction = json.loads(flippers_buy_auction)
 flippersBuyOffers = requests.get(flippersBuyOffers).text
 flippersBuyOffers = json.loads(flippersBuyOffers)
 flippersSellOffers = requests.get(flippersSellOffers).text
