@@ -85,6 +85,7 @@ while len(flippers_buy["data"]) != 0:
         buyPrice = int(number) / 1000000
         sellers = data_info["seller"]
         name = data_info["assets"][0]["name"]
+        timeu = data_info["created_at_time"]
         timef = data_info["updated_at_time"]
         timeb = int(timef) / 1000
         number_of_nft = int(data_info["assets"][0]["template_mint"])
@@ -112,7 +113,7 @@ while len(flippers_buy["data"]) != 0:
             )
 
     flippers_buy = "https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=3&buyer={}&before={}&page=1&limit=100&order=desc&sort=created".format(
-        user, timeU
+        user, timeu
     )
     print(flippers_buy)
     flippers_buyt = requests.get(flippers_buy)
