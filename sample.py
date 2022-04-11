@@ -308,6 +308,7 @@ while len(flippers_sell_auction["data"]) != 0:
     flippers_sell_auction = json.loads(flippers_sell_auction)
     print("getting sell auctions")
 
+
 while len(flippersSellOffers["data"]) != 0:
     for data_info in flippersSellOffers["data"]:
         fixedC = 0
@@ -392,6 +393,8 @@ while len(flippersBuyOffers["data"]) != 0:
         timeMs = data_info["created_at_time"]
         timeSec = int(timeMs) / 1000
         number_of_nft = int(data_info["assets"][0]["template_mint"])
+        Collection_n = data_info["collection"]["name"]
+        author_n = data_info["collection"]["author"]
         buyer = data_info["buyer"]
         seller = data_info["seller"]
         local_time = datetime.utcfromtimestamp(timeSec).strftime("%m-%d-%Y %H:%M:%S")
@@ -499,9 +502,9 @@ for col, value in dims.items():
     ws.column_dimensions[col].width = value
 maxrow = ws.max_row + 2
 ws.cell(row=maxrow, column=6, value=paidusd)  # TODO add in more here
-# ws.cell(row=maxrow, column=7, value=paidx)
-# ws.cell(row=maxrow, column=8, value=paidl)
-# ws.cell(row=maxrow, column=9, value=paidf)
+ws.cell(row=maxrow, column=7, value=paidx)
+ws.cell(row=maxrow, column=8, value=paidl)
+ws.cell(row=maxrow, column=9, value=paidf)  # TODO add in more here
 ws.cell(row=maxrow, column=1, value="totals")
 ws2.title = "{} Sells".format(user)
 for r in dataframe_to_rows(sells, index=False):
