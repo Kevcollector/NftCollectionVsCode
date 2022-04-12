@@ -10,7 +10,7 @@ from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
 from datetime import datetime
 
-user = "kevcollector"
+user = "jeffwallet"
 
 buyPrice = 0
 sellPrice = 0
@@ -115,7 +115,7 @@ while len(flippers_buy["data"]) != 0:
     flippers_buy = "https://proton.api.atomicassets.io/atomicmarket/v1/sales?state=3&buyer={}&before={}&page=1&limit=100&order=desc&sort=created".format(
         user, timeu
     )
-    print(flippers_buy)
+
     flippers_buyt = requests.get(flippers_buy)
     waitUntilReset = int(flippers_buyt.headers["X-RateLimit-Reset"])
     remainderPings = int(flippers_buyt.headers["X-RateLimit-Remaining"])
