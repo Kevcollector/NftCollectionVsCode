@@ -183,6 +183,7 @@ def collection(author, collection_name, heading, *excelsheetname):
                 )
                 authors = requests.get(authors).text
                 authors_ = json.loads(authors)
+
         auctions = "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&seller={}&collection_name={}&page=1&limit=100&order=desc&sort=created".format(
             author, collection_name
         )
@@ -190,22 +191,50 @@ def collection(author, collection_name, heading, *excelsheetname):
         acutions_ = json.loads(acutionss)
         auctionss_list = []
         total = 0
-        for data_info in acutions_["data"]:
-            number = data_info["price"]["amount"]
-            fixed = int(number) / 1000000
-            name = data_info["assets"][0]["name"]
-            timez = data_info["assets"][0]["transferred_at_time"]
-            timef = data_info["updated_at_time"]
-            timex = int(timez) / 1000
-            number_of_nft = int(data_info["assets"][0]["template_mint"])
-            buyer = data_info["buyer"]
-            seller = data_info["seller"]
-
-            local_time = datetime.utcfromtimestamp(timex).strftime("%d-%m-%Y %H:%M:%S")
-
-            auctionss_list.append(
-                [seller, fixed, Royal, buyer, number_of_nft, name, local_time]
+        if collection_name == "255111242253":
+            auctions = "https://proton.api.atomicassets.io/atomicmarket/v1/auctions?state=3&collection_name={}&page=1&limit=100&order=desc&sort=created".format(
+                author, collection_name
             )
+            acutionss = requests.get(auctions).text
+            acutions_ = json.loads(acutionss)
+            auctionss_list = []
+            for data_info in acutions_["data"]:
+                number = data_info["price"]["amount"]
+                fixed = int(number) / 1000000
+                name = data_info["assets"][0]["name"]
+                timez = data_info["assets"][0]["transferred_at_time"]
+                timef = data_info["updated_at_time"]
+                timex = int(timez) / 1000
+                number_of_nft = int(data_info["assets"][0]["template_mint"])
+                buyer = data_info["buyer"]
+                seller = data_info["seller"]
+
+                local_time = datetime.utcfromtimestamp(timex).strftime(
+                    "%d-%m-%Y %H:%M:%S"
+                )
+
+                auctionss_list.append(
+                    [seller, fixed, Royal, buyer, number_of_nft, name, local_time]
+                )
+        else:
+            for data_info in acutions_["data"]:
+                number = data_info["price"]["amount"]
+                fixed = int(number) / 1000000
+                name = data_info["assets"][0]["name"]
+                timez = data_info["assets"][0]["transferred_at_time"]
+                timef = data_info["updated_at_time"]
+                timex = int(timez) / 1000
+                number_of_nft = int(data_info["assets"][0]["template_mint"])
+                buyer = data_info["buyer"]
+                seller = data_info["seller"]
+
+                local_time = datetime.utcfromtimestamp(timex).strftime(
+                    "%d-%m-%Y %H:%M:%S"
+                )
+
+                auctionss_list.append(
+                    [seller, fixed, Royal, buyer, number_of_nft, name, local_time]
+                )
 
         auctions_df = pd.DataFrame(
             data=auctionss_list,

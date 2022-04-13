@@ -111,46 +111,458 @@ def collection(author, collection_name, heading, *excelsheetname):
                                 assitID2 = assitID1
                                 done = nft_name
 
-                                # if collection_name == "524211545444":
-                                # insert lookup table here
+                                if collection_name == "524211545444":
+                                    count = count + 1
+
+                                    if nft_name == "Proton Wolf Clan #1":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #2":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 7)
+                                    if nft_name == "Proton Wolf Clan #3":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #4":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #5":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #6":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 7)
+                                    if nft_name == "Proton Wolf Clan #7":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #8":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 5)
+                                    if nft_name == "Proton Wolf Clan #9":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #10":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 7)
+                                    if nft_name == "Proton Wolf Clan #11":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #12":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #13":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #14":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #15":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 5)
+                                    if nft_name == "Proton Wolf Clan #16":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #17":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #18":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #19":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #20":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #21":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #22":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 7)
+                                    if nft_name == "Proton Wolf Clan #23":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #24":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #25":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #26":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #27":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 5)
+                                    if nft_name == "Proton Wolf Clan #28":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #29":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 5)
+                                    if nft_name == "Proton Wolf Clan #30":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #31":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #32":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #33":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 7)
+                                    if nft_name == "Proton Wolf Clan #34":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #35":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #36":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 5)
+                                    if nft_name == "Proton Wolf Clan #37":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #38":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #39":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #40":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #41":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #42":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #43":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #44":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 5)
+                                    if nft_name == "Proton Wolf Clan #45":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #46":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #47":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #48":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #49":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #50":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 5)
+                                    if nft_name == "Proton Wolf Clan #51":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #52":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #53":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan 54":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #55":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 7)
+                                    if nft_name == "Proton Wolf Clan #56":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #57":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #58":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #59":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #60":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #61":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #62":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #63":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #64":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #65":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #66":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 5)
+                                    if nft_name == "Proton Wolf Clan #67":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #68":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #69":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 5)
+                                    if nft_name == "Proton Wolf Clan #70":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #71":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #72":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #73":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #74":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #75":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 5)
+                                    if nft_name == "Proton Wolf Clan #76":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #77":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 7)
+                                    if nft_name == "Proton Wolf Clan #78":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #79":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #80":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 5)
+                                    if nft_name == "Proton Wolf Clan #81":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #82":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #83":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #84":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 7)
+                                    if nft_name == "Proton Wolf Clan #85":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 5)
+                                    if nft_name == "Proton Wolf Clan #86":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 5)
+                                    if nft_name == "Proton Wolf Clan #87":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #88":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 7)
+                                    if nft_name == "Proton Wolf Clan #89":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #90":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 5)
+                                    if nft_name == "Proton Wolf Clan #91":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 5)
+                                    if nft_name == "Proton Wolf Clan #92":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #93":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #94":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 5)
+                                    if nft_name == "Proton Wolf Clan #95":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 5)
+                                    if nft_name == "Proton Wolf Clan #96":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 3)
+                                    if nft_name == "Proton Wolf Clan #97":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 5)
+                                    if (
+                                        nft_name
+                                        == "Proton Wolf Clan #98 | Special Rare"
+                                    ):
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 6)
+                                    if (
+                                        nft_name
+                                        == "Proton Wolf Clan #99 | Special EPIC"
+                                    ):
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 8)
+                                    if nft_name == "Proton Wolf Clan #100 | Legendary":
+                                        ws1.cell(
+                                            row=rowz, column=3
+                                        ).value = wolfPoints = (wolfPoints + 15)
+                                    else:
+                                        ws1.cell(row=rowz, column=3).value = wolfPoints
+
+                                    ws1.cell(row=rowz, column=3 + count).value = done
 
                                 if collection_name == "3drfwzczslri":
                                     count = count + 1
 
-                                    if "COMMON" in nft_name:
-                                        ws1.cell(
-                                            row=rowz, column=3
-                                        ).value = wolfPoints = (wolfPoints + 2)
+                                    if "Proton Wolf Clan 2" in nft_name:
+                                        if "COMMON" in nft_name:
+                                            ws1.cell(
+                                                row=rowz, column=3
+                                            ).value = wolfPoints = (wolfPoints + 2)
 
-                                    if "RARE" in nft_name:
-                                        ws1.cell(
-                                            row=rowz, column=3
-                                        ).value = wolfPoints = (wolfPoints + 5)
+                                        if "RARE" in nft_name:
+                                            ws1.cell(
+                                                row=rowz, column=3
+                                            ).value = wolfPoints = (wolfPoints + 5)
 
-                                    if "EPIC" in nft_name:
-                                        ws1.cell(
-                                            row=rowz, column=3
-                                        ).value = wolfPoints = (wolfPoints + 7)
+                                        if "EPIC" in nft_name:
+                                            ws1.cell(
+                                                row=rowz, column=3
+                                            ).value = wolfPoints = (wolfPoints + 7)
 
-                                    if "HEROIC" in nft_name:
-                                        ws1.cell(
-                                            row=rowz, column=3
-                                        ).value = wolfPoints = (wolfPoints + 9)
+                                        if "HEROIC" in nft_name:
+                                            ws1.cell(
+                                                row=rowz, column=3
+                                            ).value = wolfPoints = (wolfPoints + 9)
 
-                                    if "ULTRA RARE" in nft_name:
-                                        ws1.cell(
-                                            row=rowz, column=3
-                                        ).value = wolfPoints = (wolfPoints + 10)
+                                        if "ULTRA RARE" in nft_name:
+                                            ws1.cell(
+                                                row=rowz, column=3
+                                            ).value = wolfPoints = (wolfPoints + 10)
 
-                                    if "ULTRA EPIC" in nft_name:
-                                        ws1.cell(
-                                            row=rowz, column=3
-                                        ).value = wolfPoints = (wolfPoints + 14)
+                                        if "ULTRA EPIC" in nft_name:
+                                            ws1.cell(
+                                                row=rowz, column=3
+                                            ).value = wolfPoints = (wolfPoints + 14)
 
-                                    if "LEGENDARY" in nft_name:
-                                        ws1.cell(
-                                            row=rowz, column=3
-                                        ).value = wolfPoints = (wolfPoints + 15)
+                                        if "LEGENDARY" in nft_name:
+                                            ws1.cell(
+                                                row=rowz, column=3
+                                            ).value = wolfPoints = (wolfPoints + 15)
 
                                     if "FUSION" in nft_name:
                                         if "ULTRA RARE" in nft_name:
@@ -228,11 +640,11 @@ def collection(author, collection_name, heading, *excelsheetname):
 author = "redbrush"
 universe = "Proton Wolf Clan"
 heading = "{} Collection".format(universe)
-# collection_name = "524211545444"
-# collection1 = "PWC Gen I"
-# excelsheetname1 = "{}.xlsx".format(collection1)
-# time.sleep(6)
-# collection(author, collection_name, heading, excelsheetname1)
+collection_name = "524211545444"
+collection1 = "PWC Gen I"
+excelsheetname1 = "{}.xlsx".format(collection1)
+time.sleep(6)
+collection(author, collection_name, heading, excelsheetname1)
 collection_name = "3drfwzczslri"
 collection2 = "PWC Gen II"
 excelsheetname1 = "{}.xlsx".format(collection2)
