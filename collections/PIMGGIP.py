@@ -270,7 +270,7 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
                 seller = data_info["seller"]
                 timeChecker = datetime.utcfromtimestamp((timef / 1000))
                 local_time = datetime.utcfromtimestamp(timeSec).strftime(
-                    "%m-%d-%Y %H:%M:%S"
+                    "%m/%d/%Y %H:%M:%S"
                 )
 
                 authors_list.append(
