@@ -1327,11 +1327,11 @@ others = USDC * (0.1 / qua)
 for r in range(2, ws3.max_row):
     if r < 7:
         ws3.cell(row=r, column=4).value = upper5
-    if r < 21 and r > 6:
+    if r < 21 and r > 7:
         ws3.cell(row=r, column=4).value = num6_20
     if r > 21 and r < 42:
         ws3.cell(row=r, column=4).value = num21_40
-    if r > 41:
+    if r > 41 and r <= r + qua:
         ws3.cell(row=r, column=4).value = others
 
 
