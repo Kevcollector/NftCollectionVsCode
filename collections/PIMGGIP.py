@@ -808,6 +808,7 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
                                         print(people)
                                         print(gorilaPoints)
                                         temp1 = ws3.cell(row=rowz, column=3).value
+                                        temp1 = ws3.cell(row=rowz, column=3).value
                                         ws3.cell(row=rowz, column=3).value = temp1 + (
                                             gorilaPoints * 4
                                         )
@@ -1019,6 +1020,7 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
                                                     if placehodler == "Augury":
                                                         i = placehodler + " " + i
                                                         print(i + " " + str(lookup[i]))
+                                                        print(i + " " + str(lookup[i]))
                                                         ws3.cell(
                                                             row=rowz, column=3
                                                         ).value = int(lookup[i]) + int(
@@ -1063,6 +1065,7 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
                                                     if placehodler == "Augury":
                                                         i = placehodler + " " + i
                                                         print(i + " " + str(lookup[i]))
+                                                        print(i + " " + str(lookup[i]))
                                                         ws3.cell(
                                                             row=rowz, column=3
                                                         ).value = int(lookup[i]) + int(
@@ -1072,6 +1075,7 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
                                                         placehodler = i
 
                                                     else:
+                                                        print(i + " " + str(lookup[i]))
                                                         print(i + " " + str(lookup[i]))
                                                         ws3.cell(
                                                             row=rowz, column=3
@@ -1087,6 +1091,7 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
                                                     ):
                                                         i = "Augury" + " " + i
                                                         points = int(lookup[i])
+                                                        print(done + str(lookup[i]))
                                                         print(done + str(lookup[i]))
                                                         ws3.cell(
                                                             row=rowz, column=3
@@ -1113,6 +1118,7 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
                                                             == "Peculiar"
                                                         ):
                                                             i = i.replace("#", "")
+                                                            i = i.replace("#", "")
                                                             if int(i) < 31:
                                                                 print(200)
                                                                 ws3.cell(
@@ -1138,6 +1144,7 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
                                                                 ).value = 200 + int(
                                                                     temp1
                                                                 )
+                                                                print(i + str(200))
                                                                 print(i + str(200))
                                                             elif (
                                                                 i == "Soldier"
@@ -1217,35 +1224,46 @@ collection_name = "521533225213"
 collection1 = "Panda Boy Multiverse"
 excelsheetname1 = "{}.xlsx".format(collection1)
 collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
+collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
+collection_name = "521533225213"
+collection1 = "Panda Boy Multiverse"
+excelsheetname1 = "{}.xlsx".format(collection1)
+collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
 collection_name = "312124133135"
 collection1 = "Bomboy"
 time.sleep(6)
 excelsheetname1 = "{}.xlsx".format(collection1)
+collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
 collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
 collection_name = "451243333513"
 collection1 = "Crypto Gorilla"
 time.sleep(6)
 excelsheetname1 = "{}.xlsx".format(collection1)
 collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
+collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
 collection_name = "135115145544"
 collection1 = "Crypto Panda"
 time.sleep(6)
 excelsheetname1 = "{}.xlsx".format(collection1)
+collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
 collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
 collection_name = "132423131521"
 collection1 = "Crypto Kevin"
 time.sleep(4)
 excelsheetname1 = "{}.xlsx".format(collection1)
 collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
+collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
 collection_name = "534133213533"
 collection1 = "Crypto Steve "
 excelsheetname1 = "{}.xlsx".format(collection1)
 time.sleep(10)
 collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
+collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
 collection_name = "234141453513"
 collection1 = "Crypto owls "
 excelsheetname1 = "{}.xlsx".format(collection1)
 time.sleep(10)
+collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
 collection(author, collection_name, heading, userMonth, userYear, excelsheetname1)
 
 buys_df = pd.DataFrame(
