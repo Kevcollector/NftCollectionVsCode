@@ -228,13 +228,11 @@ def collection(auther, collection_name, heading, *excelsheetname):
                 timez = data_info["assets"][0]["transferred_at_time"]
                 timeMs = data_info["created_at_time"]
                 timeSec = int(timeMs) / 1000
-                number_of_nft = int(data_info["assets"][0]["template_mint"])
-                buyer = data_info["buyer"]
-                seller = data_info["seller"]
-                local_time = datetime.utcfromtimestamp(timeSec).strftime(
-                    "%m-%d-%Y %H:%M:%S"
-                )
-
+                number_of_nft = int(data_info['assets'][0]['template_mint'])
+                buyer = data_info['buyer']
+                seller = data_info['seller']
+                local_time = datetime.utcfromtimestamp(
+                    timeSec).strftime('%m-%d-%Y %H:%M:%S')
                 authers_list.append(
                     [
                         seller,

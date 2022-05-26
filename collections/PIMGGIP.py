@@ -270,7 +270,7 @@ def collection(author, collection_name, heading, userMonth, userYear, *excelshee
                 seller = data_info["seller"]
                 timeChecker = datetime.utcfromtimestamp((timef / 1000))
                 local_time = datetime.utcfromtimestamp(timeSec).strftime(
-                    "%m-%d-%Y %H:%M:%S"
+                    "%m/%d/%Y %H:%M:%S"
                 )
 
                 authors_list.append(
@@ -1305,24 +1305,7 @@ holders_df = holders_df.groupby(["account"]).agg(
     {"account": "min", "amount held": "sum", "points": "sum"}
 )
 holders_df = holders_df.sort_values(by=["points"], ascending=False)
-FirstBuysUSDC = buys_df["price listed usd"].sum()
-FirstBuysXPR = buys_df["price listed xpr"].sum()
-FirstBuysLoan = buys_df["price listed loans"].sum()
-ResalesUSDC = buys_df["price listed usd"].sum()
-ResalesXPR = buys_df["price listed xpr"].sum()
-ResalesLoan = buys_df["price listed loans"].sum()
 
-DistributionUSDC = FirstBuysUSDC * 0.15
-DistributionXPR = FirstBuysXPR * 0.15
-DistributionLoan = FirstBuysLoan * 0.15
-
-ResaleDistributionUSDC = ResalesUSDC * 0.1 * 0.15
-ResaleDistributionXPR = ResalesXPR * 0.1 * 0.15
-ResaleDistributionLoan = ResalesLoan * 0.1 * 0.15
-
-totaDistriUsd = DistributionUSDC + ResaleDistributionUSDC
-totaDistriXpr = DistributionXPR + ResaleDistributionXPR
-totaDistriLoan = DistributionLoan + ResaleDistributionLoan
 
 writeToExcel(ws1, buys_df)
 writeToExcel(ws2, resale_df)
@@ -1342,66 +1325,32 @@ for r in range(2, ws3.max_row + 2):
     ws3.cell(row=r, column=2).value = holders
     time.sleep(1)
 qua = 0
-temp = totaDistriUsd * 0.50
-upper5 = temp * 0.07
-num6_20 = temp * 0.043
-num21_40 = totaDistriUsd * 0.25 / 20
-for r in range(2, ws3.max_row):
-    if ws3.cell(row=r, column=3).value >= 100:
-        if r > 40:
-            qua += 1
-num60 = totaDistriUsd * 0.1 / qua
-for r in range(2, ws3.max_row):
-    if r < 7:
-        ws3.cell(row=r, column=4).value = upper5
-    if r < 21 and r > 7:
-        ws3.cell(row=r, column=4).value = num6_20
-    if r > 22 and r < 42:
-        ws3.cell(row=r, column=4).value = num21_40
-    if r > 42:
-        ws3.cell(row=r, column=4).value = num60
-
-temp = totaDistriXpr * 0.50
-upper5 = temp * 0.07
-num6_20 = temp * 0.043
-num21_40 = totaDistriXpr * 0.25 / 20
-for r in range(2, ws3.max_row):
-    if ws3.cell(row=r, column=3).value >= 100:
-        if r > 40:
-            qua += 1
-num60 = totaDistriXpr * 0.1 / qua
-for r in range(2, ws3.max_row):
-    if r < 7:
-        ws3.cell(row=r, column=4).value = upper5
-    if r < 21 and r > 7:
-        ws3.cell(row=r, column=4).value = num6_20
-    if r > 22 and r < 42:
-        ws3.cell(row=r, column=4).value = num21_40
-    if r > 42:
-        ws3.cell(row=r, column=4).value = num60
-
-temp = totaDistriLoan * 0.50
-upper5 = temp * 0.07
-num6_20 = temp * 0.043
-num21_40 = totaDistriLoan * 0.25 / 20
 ws3.cell(row=1, column=4).value = "USDC"
-ws3.cell(row=1, column=5).value = "XPR"
-ws3.cell(row=1, column=5).value = "LOAN"
+usd_user = requests.get(
+    "https://proton.cryptolions.io/v2/state/get_tokens?limit=1000&account=pimlrp"
+).text
+usd_user = json.loads(usd_user)
+for x in usd_user["tokens"]:
+    if x["symbol"] == "XUSDC":
+        USDC = x["amount"]
+upper5 = 0.035 * USDC
+num6_20 = 0.025 * USDC
+num21_40 = 0.0125 * USDC
 
 for r in range(2, ws3.max_row):
-    if ws3.cell(row=r, column=3).value >= 100:
-        if r > 40:
-            qua += 1
-num60 = totaDistriLoan * 0.1 / qua
+    if r > 40 and ws3.cell(row=r, column=3).value >= 100:
+        qua += 1
+others = USDC * (0.1 / qua)
+
 for r in range(2, ws3.max_row):
     if r < 7:
-        ws3.cell(row=r, column=6).value = upper5
+        ws3.cell(row=r, column=4).value = upper5
     if r < 21 and r > 7:
-        ws3.cell(row=r, column=6).value = num6_20
-    if r > 22 and r < 42:
-        ws3.cell(row=r, column=6).value = num21_40
-    if r > 42:
-        ws3.cell(row=r, column=6).value = num60
+        ws3.cell(row=r, column=4).value = num6_20
+    if r > 21 and r < 42:
+        ws3.cell(row=r, column=4).value = num21_40
+    if r > 41 and r <= r + qua:
+        ws3.cell(row=r, column=4).value = others
 
 
 wb2.save("saved.xlsx")
